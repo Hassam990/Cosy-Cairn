@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="700" viewBox="0 0 800 700">
+  <rect width="800" height="700" fill="#c5d1c2"/>
+  <rect x="40" y="40" width="720" height="620" fill="none" stroke="#ffffff" stroke-width="3" opacity="0.5"/>
+  <text x="400" y="330" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="48" fill="#ffffff" font-style="italic">Our Cosy</text>
+  <text x="400" y="390" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="48" fill="#ffffff" font-style="italic">Workspace</text>
+  <circle cx="400" cy="520" r="50" fill="none" stroke="#ffffff" stroke-width="2" opacity="0.6"/>
+</svg>

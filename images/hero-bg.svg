@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900">
+  <defs>
+    <linearGradient id="sky" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#f8f5f0;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#eef3e8;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#e0ead6;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="water" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#d4e3d0;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#c5d9c4;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Sky / background -->
+  <rect width="1600" height="900" fill="url(#sky)"/>
+  
+  <!-- Soft willow/tree shapes -->
+  <g opacity="0.4">
+    <ellipse cx="1200" cy="200" rx="180" ry="260" fill="#b8c9a9"/>
+    <ellipse cx="1300" cy="280" rx="140" ry="220" fill="#a8bf99"/>
+    <ellipse cx="1100" cy="320" rx="120" ry="200" fill="#c5d9b8"/>
+  </g>
+  
+  <g opacity="0.35">
+    <ellipse cx="200" cy="250" rx="160" ry="280" fill="#9caf88"/>
+    <ellipse cx="320" cy="350" rx="130" ry="220" fill="#b8c9a9"/>
+    <ellipse cx="80" cy="400" rx="110" ry="190" fill="#a8bf99"/>
+  </g>
+  
+  <!-- Water / pond area -->
+  <rect x="0" y="520" width="1600" height="380" fill="url(#water)"/>
+  
+  <!-- Water lilies -->
+  <g opacity="0.6">
+    <ellipse cx="450" cy="620" rx="50" ry="18" fill="#e8b4b4"/>
+    <ellipse cx="520" cy="660" rx="45" ry="15" fill="#f0c4c4"/>
+    <ellipse cx="380" cy="700" rx="55" ry="20" fill="#e8b4b4"/>
+    <ellipse cx="600" cy="740" rx="48" ry="16" fill="#f0c4c4"/>
+    <ellipse cx="720" cy="680" rx="52" ry="18" fill="#e8b4b4"/>
+    <ellipse cx="850" cy="620" rx="46" ry="15" fill="#f0c4c4"/>
+    <ellipse cx="980" cy="700" rx="50" ry="17" fill="#e8b4b4"/>
+  </g>
+  
+  <!-- Flowers on left side -->
+  <g opacity="0.5">
+    <circle cx="150" cy="650" r="40" fill="#f0c4c4"/>
+    <circle cx="110" cy="700" r="35" fill="#e8b4b4"/>
+    <circle cx="190" cy="720" r="38" fill="#f0c4c4"/>
+    <circle cx="230" cy="660" r="32" fill="#e8b4b4"/>
+    <circle cx="80" cy="760" r="36" fill="#f0c4c4"/>
+  </g>
+  
+  <!-- Soft bridge shape -->
+  <g opacity="0.45">
+    <path d="M 900 520 Q 1050 420 1200 520" stroke="#8fa68e" stroke-width="12" fill="none"/>
+    <path d="M 900 520 L 900 560 M 1200 520 L 1200 560" stroke="#8fa68e" stroke-width="8"/>
+  </g>
+  
+  <!-- Soft light overlay circles -->
+  <circle cx="800" cy="350" r="300" fill="#ffffff" opacity="0.15"/>
+  <circle cx="500" cy="450" r="200" fill="#ffffff" opacity="0.1"/>
+</svg>

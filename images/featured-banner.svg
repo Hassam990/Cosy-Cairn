@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="700" viewBox="0 0 800 700">
+  <rect width="800" height="700" fill="#e8d5d0"/>
+  <rect x="40" y="40" width="720" height="620" fill="none" stroke="#ffffff" stroke-width="3" opacity="0.5"/>
+  <text x="400" y="320" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="48" fill="#7a8f6a" font-style="italic">New Season</text>
+  <text x="400" y="380" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="48" fill="#7a8f6a" font-style="italic">Collection</text>
+  <circle cx="400" cy="500" r="60" fill="none" stroke="#7a8f6a" stroke-width="2" opacity="0.6"/>
+  <path d="M370 500 L430 500 M400 470 L400 530" stroke="#7a8f6a" stroke-width="2" opacity="0.6"/>
+</svg>
