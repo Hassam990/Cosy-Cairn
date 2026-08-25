@@ -187,16 +187,13 @@
   }
 
   // ===== Mobile Menu =====
-  const menuToggle = document.querySelector(".mobile-menu-toggle");
-  const mainNav = document.querySelector(".main-nav");
-  const navCloseBtn = document.querySelector(".nav-close-btn");
-  let menuOverlay = null;
+  // Declared here, assigned inside DOMContentLoaded
+  let menuToggle, mainNav, navCloseBtn, menuOverlay;
 
   function openMenu() {
     if (!menuToggle || !mainNav) return;
     menuToggle.classList.add("open");
     menuToggle.setAttribute("aria-expanded", "true");
-    menuToggle.setAttribute("aria-label", "Close menu");
     mainNav.classList.add("open");
     if (menuOverlay) menuOverlay.classList.add("open");
     document.body.style.overflow = "hidden";
@@ -206,14 +203,17 @@
     if (!menuToggle || !mainNav) return;
     menuToggle.classList.remove("open");
     menuToggle.setAttribute("aria-expanded", "false");
-    menuToggle.setAttribute("aria-label", "Open menu");
     mainNav.classList.remove("open");
     if (menuOverlay) menuOverlay.classList.remove("open");
     document.body.style.overflow = "";
   }
 
   function toggleMenu() {
-    mainNav && mainNav.classList.contains("open") ? closeMenu() : openMenu();
+    if (mainNav && mainNav.classList.contains("open")) {
+      closeMenu();
+    } else {
+      openMenu();
+    }
   }
 
   // ===== Toast Notifications =====
@@ -501,6 +501,10 @@
     }
 
     // Mobile menu
+    menuToggle  = document.querySelector(".mobile-menu-toggle");
+    mainNav     = document.querySelector(".main-nav");
+    navCloseBtn = document.querySelector(".nav-close-btn");
+
     menuOverlay = document.querySelector(".mobile-menu-overlay");
     if (!menuOverlay) {
       menuOverlay = document.createElement("div");
