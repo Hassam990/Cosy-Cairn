@@ -1,15 +1,37 @@
 {
   "sections": {
-    "announcement-bar": { "type": "announcement-bar", "disabled": false },
-    "hero":             { "type": "hero",              "disabled": false },
-    "trust-badges":     { "type": "trust-badges",      "disabled": false },
-    "featured-categories": { "type": "featured-categories", "disabled": false },
-    "featured-products":   { "type": "featured-products",   "disabled": false },
-    "featured-banner":     { "type": "featured-banner",     "disabled": false },
-    "newsletter":          { "type": "newsletter",          "disabled": false }
+    "hero": {
+      "type": "hero",
+      "disabled": false,
+      "settings": {}
+    },
+    "trust-badges": {
+      "type": "trust-badges",
+      "disabled": false,
+      "settings": {}
+    },
+    "featured-categories": {
+      "type": "featured-categories",
+      "disabled": false,
+      "settings": {}
+    },
+    "featured-products": {
+      "type": "featured-products",
+      "disabled": false,
+      "settings": {}
+    },
+    "featured-banner": {
+      "type": "featured-banner",
+      "disabled": false,
+      "settings": {}
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "disabled": false,
+      "settings": {}
+    }
   },
   "order": [
-    "announcement-bar",
     "hero",
     "trust-badges",
     "featured-categories",

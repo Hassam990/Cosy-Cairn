@@ -1,0 +1,43 @@
+<div class="page-header">
+  <div class="container">
+    <h1>My Account</h1>
+  </div>
+</div>
+<div class="container">
+  <div class="page-content">
+    <p>Hello {{ customer.first_name }},</p>
+    <h2 style="margin:32px 0 16px;">Order History</h2>
+    {%- if customer.orders.size > 0 -%}
+      <table style="width:100%;border-collapse:collapse;font-size:0.95rem;">
+        <thead>
+          <tr style="border-bottom:2px solid var(--beige);text-align:left;">
+            <th style="padding:12px 0;">Order</th>
+            <th style="padding:12px 0;">Date</th>
+            <th style="padding:12px 0;">Total</th>
+            <th style="padding:12px 0;">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          {%- for order in customer.orders -%}
+            <tr style="border-bottom:1px solid var(--beige);">
+              <td style="padding:14px 0;"><a href="{{ order.customer_url }}" style="color:var(--sage-dark);">{{ order.name }}</a></td>
+              <td style="padding:14px 0;">{{ order.created_at | date: '%d %b %Y' }}</td>
+              <td style="padding:14px 0;">{{ order.total_price | money }}</td>
+              <td style="padding:14px 0;">{{ order.financial_status_label }}</td>
+            </tr>
+          {%- endfor -%}
+        </tbody>
+      </table>
+    {%- else -%}
+      <p style="font-style:italic;color:var(--text-light);">You haven't placed any orders yet.</p>
+      <a href="{{ routes.all_products_collection_url }}" class="btn btn-primary" style="margin-top:24px;">Start Shopping</a>
+    {%- endif -%}
+    <div style="margin-top:40px;padding-top:32px;border-top:1px solid var(--beige);">
+      <a href="{{ routes.account_logout_url }}" class="btn btn-outline">Log Out</a>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{ "name": "Account", "settings": [] }
+{% endschema %}

@@ -219,6 +219,85 @@
     });
   }
 
+  // ===== Variant Selector (product page) =====
+  function initVariantSelector() {
+    const form = document.querySelector('[data-product-form]');
+    if (!form) return;
+
+    const variantIdInput = document.getElementById('variant-id-input');
+    if (!variantIdInput) return;
+
+    // Build variant map from product JSON
+    const productDataEl = document.getElementById('product-json');
+    if (!productDataEl) return;
+
+    let variants;
+    try {
+      variants = JSON.parse(productDataEl.textContent).variants;
+    } catch (e) { return; }
+
+    function getSelectedOptions() {
+      const options = [];
+      form.querySelectorAll('.option-selector:checked').forEach(input => {
+        options[parseInt(input.dataset.optionPosition) - 1] = input.value;
+      });
+      return options;
+    }
+
+    function updateVariant() {
+      const selected = getSelectedOptions();
+      const match = variants.find(v =>
+        v.options.every((opt, i) => opt === selected[i])
+      );
+      if (match) {
+        variantIdInput.value = match.id;
+        // Update price display
+        const priceEl = document.querySelector('.product-info-price');
+        if (priceEl && match.price) {
+          if (match.compare_at_price && match.compare_at_price > match.price) {
+            priceEl.innerHTML = `<span style="color:#c0786a;">£${(match.price/100).toFixed(2)}</span> <span style="font-size:1.1rem;color:var(--text-light);text-decoration:line-through;margin-left:12px;">£${(match.compare_at_price/100).toFixed(2)}</span>`;
+          } else {
+            priceEl.textContent = '£' + (match.price / 100).toFixed(2);
+          }
+        }
+        // Update submit button
+        const submitBtn = form.querySelector('[type="submit"]');
+        if (submitBtn) {
+          submitBtn.disabled = !match.available;
+          submitBtn.textContent = match.available ? 'Add to Cart' : 'Sold Out';
+          submitBtn.style.opacity = match.available ? '1' : '0.5';
+        }
+      }
+    }
+
+    // Highlight selected option labels
+    function updateOptionStyles() {
+      form.querySelectorAll('.option-selector').forEach(input => {
+        const label = input.nextElementSibling;
+        if (!label) return;
+        if (input.checked) {
+          label.style.borderColor = 'var(--sage)';
+          label.style.background  = 'var(--sage)';
+          label.style.color       = 'var(--white)';
+        } else {
+          label.style.borderColor = 'var(--beige)';
+          label.style.background  = 'transparent';
+          label.style.color       = 'var(--text-dark)';
+        }
+      });
+    }
+
+    form.querySelectorAll('.option-selector').forEach(input => {
+      input.addEventListener('change', () => {
+        updateOptionStyles();
+        updateVariant();
+      });
+    });
+
+    // Init styles on load
+    updateOptionStyles();
+  }
+
   // ===== Quantity selector (product page) =====
   function initQtySelector() {
     document.querySelectorAll('.qty-selector').forEach(selector => {
@@ -286,6 +365,7 @@
     initFadeIn();
     initProductForms();
     initQtySelector();
+    initVariantSelector();
   });
 
 })();

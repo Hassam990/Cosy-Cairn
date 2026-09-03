@@ -5,35 +5,46 @@
       <p class="section-subtitle">{{ section.settings.subtitle }}</p>
       <div class="section-divider"></div>
     </div>
+
     <div class="category-grid">
-      {%- for collection in collections limit: 5 -%}
-        <a href="{{ collection.url }}" class="category-card fade-in">
-          <div class="category-card-image">
-            {%- if collection.image -%}
-              <img src="{{ collection.image | image_url: width: 600 }}"
-                   alt="{{ collection.title }}"
-                   loading="lazy" width="600" height="700">
-            {%- else -%}
-              <div class="category-card-placeholder">{{ collection.title | slice: 0, 2 | upcase }}</div>
-            {%- endif -%}
-          </div>
-          <div class="category-card-overlay">
-            <h3 class="category-card-title">{{ collection.title }}</h3>
-            {%- if collection.description != blank -%}
-              <p class="category-card-desc">{{ collection.description | strip_html | truncate: 60 }}</p>
-            {%- endif -%}
-            <span class="category-card-link">Shop Now</span>
-          </div>
-        </a>
+      {%- for block in section.blocks -%}
+        {%- assign col = collections[block.settings.collection] -%}
+        {%- if col != blank -%}
+          <a href="{{ col.url }}" class="category-card fade-in" {{ block.shopify_attributes }}>
+            <div class="category-card-image">
+              {%- if col.image -%}
+                <img src="{{ col.image | image_url: width: 600 }}"
+                     alt="{{ col.title | escape }}"
+                     loading="lazy" width="600" height="700">
+              {%- elsif col.products.first.featured_image -%}
+                <img src="{{ col.products.first.featured_image | image_url: width: 600 }}"
+                     alt="{{ col.title | escape }}"
+                     loading="lazy" width="600" height="700">
+              {%- else -%}
+                <div class="category-card-placeholder">{{ col.title | slice: 0, 2 | upcase }}</div>
+              {%- endif -%}
+            </div>
+            <div class="category-card-overlay">
+              <h3 class="category-card-title">{{ col.title }}</h3>
+              {%- if col.description != blank -%}
+                <p class="category-card-desc">{{ col.description | strip_html | truncate: 60 }}</p>
+              {%- endif -%}
+              <span class="category-card-link">Shop Now</span>
+            </div>
+          </a>
+        {%- else -%}
+          <!-- block has no collection selected — skip -->
+        {%- endif -%}
       {%- else -%}
+        {%- comment -%}No blocks added — show placeholder cards{%- endcomment -%}
         {%- for i in (1..5) -%}
           <div class="category-card category-card--empty fade-in">
             <div class="category-card-image">
               <div class="category-card-placeholder">—</div>
             </div>
             <div class="category-card-overlay">
-              <h3 class="category-card-title">Collection {{ i }}</h3>
-              <span class="category-card-link">Shop Now</span>
+              <h3 class="category-card-title">Add a collection</h3>
+              <span class="category-card-link">Edit section</span>
             </div>
           </div>
         {%- endfor -%}
@@ -45,10 +56,31 @@
 {% schema %}
 {
   "name": "Featured Categories",
+  "max_blocks": 5,
   "settings": [
     { "type": "text", "id": "title",    "label": "Section title",    "default": "Shop by Category" },
     { "type": "text", "id": "subtitle", "label": "Section subtitle", "default": "Curated collections for every cosy corner" }
   ],
-  "presets": [{ "name": "Featured Categories" }]
+  "blocks": [
+    {
+      "type": "category",
+      "name": "Category",
+      "settings": [
+        { "type": "collection", "id": "collection", "label": "Collection" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Featured Categories",
+      "blocks": [
+        { "type": "category" },
+        { "type": "category" },
+        { "type": "category" },
+        { "type": "category" },
+        { "type": "category" }
+      ]
+    }
+  ]
 }
 {% endschema %}

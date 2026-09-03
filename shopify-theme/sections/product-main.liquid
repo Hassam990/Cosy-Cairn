@@ -55,15 +55,24 @@
             {%- for option in product.options_with_values -%}
               <div style="margin-bottom:16px;">
                 <label style="font-size:0.82rem;letter-spacing:1px;text-transform:uppercase;display:block;margin-bottom:8px;">{{ option.name }}</label>
-                <select name="id" style="width:100%;padding:12px 16px;border:1.5px solid var(--beige);border-radius:var(--radius-sm);background:var(--cream);font-family:inherit;font-size:1rem;cursor:pointer;">
-                  {%- for variant in product.variants -%}
-                    <option value="{{ variant.id }}" {% unless variant.available %}disabled{% endunless %}>
-                      {{ variant.title }} — {{ variant.price | money }}
-                    </option>
+                <div style="display:flex;gap:8px;flex-wrap:wrap;">
+                  {%- for value in option.values -%}
+                    <label style="cursor:pointer;">
+                      <input type="radio"
+                             name="option{{ option.position }}"
+                             value="{{ value | escape }}"
+                             {% if option.selected_value == value %}checked{% endif %}
+                             style="display:none;"
+                             class="option-selector"
+                             data-option-position="{{ option.position }}">
+                      <span style="display:inline-block;padding:8px 18px;border:1.5px solid var(--beige);border-radius:30px;font-size:0.9rem;transition:all 0.2s;" class="option-label">{{ value }}</span>
+                    </label>
                   {%- endfor -%}
-                </select>
+                </div>
               </div>
             {%- endfor -%}
+            <!-- Hidden variant id input updated by JS -->
+            <input type="hidden" name="id" id="variant-id-input" value="{{ product.selected_or_first_available_variant.id }}">
           {%- else -%}
             <input type="hidden" name="id" value="{{ product.first_available_variant.id }}">
           {%- endif -%}

@@ -47,14 +47,14 @@
 
 <body class="template-{{ template.name }}">
 
-  {%- sections 'announcement-bar' -%}
-  {%- sections 'header' -%}
+  {%- section 'announcement-bar' -%}
+  {%- section 'header' -%}
 
   <main id="main-content" tabindex="-1">
     {{ content_for_layout }}
   </main>
 
-  {%- sections 'footer' -%}
+  {%- section 'footer' -%}
 
   <!-- Cart Drawer -->
   <div class="cart-overlay" id="cart-overlay"></div>

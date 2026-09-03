@@ -20,7 +20,7 @@
 
     {%- if product.compare_at_price > product.price -%}
       <span class="product-badge sale">Sale</span>
-    {%- elsif product.created_at > 'now' | date: '%s' | minus: 2592000 | date: '%Y-%m-%d' -%}
+    {%- elsif product.tags contains 'new' or product.tags contains 'new-in' -%}
       <span class="product-badge new">New</span>
     {%- elsif product.tags contains 'best-seller' -%}
       <span class="product-badge">Best Seller</span>
