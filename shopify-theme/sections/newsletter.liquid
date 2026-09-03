@@ -1,0 +1,51 @@
+<section class="newsletter">
+  <div class="container">
+    <div class="fade-in">
+      <div class="newsletter-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+        </svg>
+      </div>
+      <h2>{{ section.settings.title }}</h2>
+      <p>{{ section.settings.subtitle }}</p>
+
+      {%- form 'customer', id: 'newsletter-form' -%}
+        <input type="hidden" name="contact[tags]" value="newsletter">
+        <div class="newsletter-form">
+          <input type="email"
+                 name="contact[email]"
+                 placeholder="{{ section.settings.placeholder }}"
+                 required
+                 aria-label="{{ section.settings.placeholder }}"
+                 autocomplete="email">
+          <button type="submit" class="btn btn-light">
+            {{ section.settings.button_label }}
+          </button>
+        </div>
+        {%- if form.posted_successfully? -%}
+          <p class="newsletter-success">{{ section.settings.success_message }}</p>
+        {%- endif -%}
+        {%- if form.errors -%}
+          <p class="newsletter-error">{{ form.errors.translated_fields['email'] | capitalize }} {{ form.errors.messages['email'] }}</p>
+        {%- endif -%}
+      {%- endform -%}
+
+      <p class="newsletter-note">{{ section.settings.note }}</p>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Newsletter",
+  "settings": [
+    { "type": "text",     "id": "title",           "label": "Title",            "default": "Join Our Cosy Corner" },
+    { "type": "text",     "id": "subtitle",        "label": "Subtitle",         "default": "Be the first to know about new arrivals, exclusive offers, and little moments of wonder." },
+    { "type": "text",     "id": "placeholder",     "label": "Input placeholder","default": "Your email address" },
+    { "type": "text",     "id": "button_label",    "label": "Button label",     "default": "Subscribe" },
+    { "type": "text",     "id": "note",            "label": "Privacy note",     "default": "No spam, ever. Unsubscribe any time." },
+    { "type": "text",     "id": "success_message", "label": "Success message",  "default": "Thank you for subscribing!" }
+  ],
+  "presets": [{ "name": "Newsletter" }]
+}
+{% endschema %}

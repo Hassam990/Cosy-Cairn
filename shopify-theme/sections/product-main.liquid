@@ -1,0 +1,109 @@
+<section class="product-page">
+  <div class="container">
+    <div class="product-layout">
+
+      <!-- Gallery -->
+      <div class="product-gallery">
+        <div class="product-gallery-main">
+          {%- if product.featured_image -%}
+            <img
+              src="{{ product.featured_image | image_url: width: 900 }}"
+              alt="{{ product.featured_image.alt | default: product.title | escape }}"
+              id="product-main-image"
+              width="900">
+          {%- else -%}
+            <div style="width:100%;height:100%;background:var(--cream-warm);display:flex;align-items:center;justify-content:center;font-size:3rem;color:var(--text-light);">{{ product.title | slice: 0, 2 | upcase }}</div>
+          {%- endif -%}
+        </div>
+
+        {%- if product.images.size > 1 -%}
+          <div class="product-gallery-thumbs" style="display:flex;gap:10px;margin-top:12px;overflow-x:auto;">
+            {%- for image in product.images -%}
+              <button
+                onclick="document.getElementById('product-main-image').src='{{ image | image_url: width: 900 }}'"
+                style="flex-shrink:0;width:72px;height:86px;border:2px solid var(--beige);border-radius:var(--radius-sm);overflow:hidden;cursor:pointer;background:none;padding:0;">
+                <img src="{{ image | image_url: width: 144 }}" alt="{{ image.alt | escape }}" style="width:100%;height:100%;object-fit:cover;">
+              </button>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      </div>
+
+      <!-- Info -->
+      <div class="product-info">
+        {%- if product.vendor != blank -%}
+          <p style="font-size:0.78rem;letter-spacing:2px;text-transform:uppercase;color:var(--sage-dark);margin-bottom:10px;">{{ product.vendor }}</p>
+        {%- endif -%}
+
+        <h1 class="product-info-title">{{ product.title }}</h1>
+
+        <div class="product-info-price">
+          {%- if product.compare_at_price > product.price -%}
+            <span style="color:#c0786a;">{{ product.price | money }}</span>
+            <span style="font-size:1.1rem;color:var(--text-light);text-decoration:line-through;margin-left:12px;">{{ product.compare_at_price | money }}</span>
+          {%- else -%}
+            {{ product.price | money }}
+          {%- endif -%}
+        </div>
+
+        {%- if product.description != blank -%}
+          <div class="product-info-desc">{{ product.description }}</div>
+        {%- endif -%}
+
+        {%- form 'product', product, data-product-form: '' -%}
+          {%- if product.variants.size > 1 -%}
+            {%- for option in product.options_with_values -%}
+              <div style="margin-bottom:16px;">
+                <label style="font-size:0.82rem;letter-spacing:1px;text-transform:uppercase;display:block;margin-bottom:8px;">{{ option.name }}</label>
+                <select name="id" style="width:100%;padding:12px 16px;border:1.5px solid var(--beige);border-radius:var(--radius-sm);background:var(--cream);font-family:inherit;font-size:1rem;cursor:pointer;">
+                  {%- for variant in product.variants -%}
+                    <option value="{{ variant.id }}" {% unless variant.available %}disabled{% endunless %}>
+                      {{ variant.title }} — {{ variant.price | money }}
+                    </option>
+                  {%- endfor -%}
+                </select>
+              </div>
+            {%- endfor -%}
+          {%- else -%}
+            <input type="hidden" name="id" value="{{ product.first_available_variant.id }}">
+          {%- endif -%}
+
+          <div class="quantity-selector qty-selector" style="margin-bottom:16px;">
+            <span class="qty-label">Quantity</span>
+            <div style="display:flex;align-items:center;gap:12px;border:1.5px solid var(--beige);border-radius:30px;padding:4px 16px;width:fit-content;">
+              <button type="button" data-qty-dec style="background:none;border:none;font-size:1.3rem;cursor:pointer;color:var(--text-dark);line-height:1;">−</button>
+              <input type="number" name="quantity" value="1" min="1" style="width:36px;text-align:center;border:none;background:transparent;font-family:inherit;font-size:1rem;">
+              <button type="button" data-qty-inc style="background:none;border:none;font-size:1.3rem;cursor:pointer;color:var(--text-dark);line-height:1;">+</button>
+            </div>
+          </div>
+
+          {%- if product.first_available_variant.available -%}
+            <button type="submit" class="btn btn-primary btn-full">Add to Cart</button>
+          {%- else -%}
+            <button type="button" class="btn btn-outline btn-full" disabled style="opacity:0.5;cursor:not-allowed;">Sold Out</button>
+          {%- endif -%}
+        {%- endform -%}
+
+        <!-- Trust -->
+        <div style="display:flex;flex-direction:column;gap:8px;margin-top:28px;padding-top:28px;border-top:1px solid var(--beige);">
+          <p style="font-size:0.82rem;color:var(--text-light);display:flex;align-items:center;gap:8px;">
+            <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+            Secure checkout
+          </p>
+          <p style="font-size:0.82rem;color:var(--text-light);display:flex;align-items:center;gap:8px;">
+            <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            Eco friendly packaging
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Product",
+  "settings": []
+}
+{% endschema %}

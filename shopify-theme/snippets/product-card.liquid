@@ -1,0 +1,54 @@
+{%- assign featured_image = product.featured_image -%}
+{%- assign first_variant  = product.first_available_variant | default: product.variants.first -%}
+
+<div class="product-card">
+  <div class="product-card-image">
+    {%- if featured_image -%}
+      <a href="{{ product.url }}">
+        <img
+          src="{{ featured_image | image_url: width: 600 }}"
+          alt="{{ featured_image.alt | default: product.title | escape }}"
+          loading="lazy"
+          width="600"
+          height="700">
+      </a>
+    {%- else -%}
+      <a href="{{ product.url }}" class="category-card-placeholder">
+        {{ product.title | slice: 0, 2 | upcase }}
+      </a>
+    {%- endif -%}
+
+    {%- if product.compare_at_price > product.price -%}
+      <span class="product-badge sale">Sale</span>
+    {%- elsif product.created_at > 'now' | date: '%s' | minus: 2592000 | date: '%Y-%m-%d' -%}
+      <span class="product-badge new">New</span>
+    {%- elsif product.tags contains 'best-seller' -%}
+      <span class="product-badge">Best Seller</span>
+    {%- endif -%}
+
+    {%- if first_variant.available -%}
+      <button
+        class="product-card-quick"
+        data-quick-add
+        data-variant-id="{{ first_variant.id }}">
+        Add to Cart
+      </button>
+    {%- else -%}
+      <span class="product-card-quick" style="cursor:default;">Sold Out</span>
+    {%- endif -%}
+  </div>
+
+  <div class="product-card-info">
+    <a href="{{ product.url }}">
+      <h3 class="product-card-title">{{ product.title }}</h3>
+    </a>
+    <div class="product-card-price">
+      {%- if product.compare_at_price > product.price -%}
+        <span class="price price--sale">{{ product.price | money }}</span>
+        <span class="price price--original">{{ product.compare_at_price | money }}</span>
+      {%- else -%}
+        <span class="price">{{ product.price | money }}</span>
+      {%- endif -%}
+    </div>
+  </div>
+</div>

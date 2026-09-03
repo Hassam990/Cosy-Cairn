@@ -1,0 +1,44 @@
+<section class="section section--warm">
+  <div class="container">
+    <div class="section-header fade-in">
+      <h2 class="section-title">{{ section.settings.title }}</h2>
+      <p class="section-subtitle">{{ section.settings.subtitle }}</p>
+      <div class="section-divider"></div>
+    </div>
+
+    <div class="product-grid">
+      {%- assign src_collection = collections[section.settings.collection] -%}
+      {%- if src_collection != blank -%}
+        {%- for product in src_collection.products limit: section.settings.products_count -%}
+          {%- render 'product-card', product: product -%}
+        {%- endfor -%}
+      {%- else -%}
+        {%- for product in collections.all.products limit: section.settings.products_count -%}
+          {%- render 'product-card', product: product -%}
+        {%- endfor -%}
+      {%- endif -%}
+    </div>
+
+    <div class="section-cta">
+      <a href="{{ section.settings.cta_url | default: routes.all_products_collection_url }}"
+         class="btn btn-outline fade-in">
+        {{ section.settings.cta_label }}
+      </a>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Featured Products",
+  "settings": [
+    { "type": "text",            "id": "title",          "label": "Section title",    "default": "Shop Our Favourites" },
+    { "type": "text",            "id": "subtitle",       "label": "Section subtitle", "default": "Hand-picked pieces we think you'll love" },
+    { "type": "collection",      "id": "collection",     "label": "Collection" },
+    { "type": "range",           "id": "products_count", "label": "Number of products", "min": 4, "max": 12, "step": 2, "default": 8 },
+    { "type": "text",            "id": "cta_label",      "label": "Button label",     "default": "View All Products" },
+    { "type": "url",             "id": "cta_url",        "label": "Button URL" }
+  ],
+  "presets": [{ "name": "Featured Products" }]
+}
+{% endschema %}

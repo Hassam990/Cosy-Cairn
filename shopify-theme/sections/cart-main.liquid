@@ -1,0 +1,53 @@
+<div class="page-header">
+  <div class="container">
+    <h1>Your Cart</h1>
+  </div>
+</div>
+<div class="container" style="padding-top:48px;padding-bottom:80px;">
+  {%- if cart.item_count > 0 -%}
+    <div style="display:grid;grid-template-columns:1fr 340px;gap:48px;align-items:start;">
+      <div>
+        {%- for item in cart.items -%}
+          <div style="display:flex;gap:20px;padding:24px 0;border-bottom:1px solid var(--beige);">
+            <div style="width:100px;height:120px;border-radius:var(--radius-sm);overflow:hidden;flex-shrink:0;background:var(--cream-warm);">
+              {%- if item.image -%}<img src="{{ item.image | image_url: width: 200 }}" alt="{{ item.title | escape }}" style="width:100%;height:100%;object-fit:cover;">{%- endif -%}
+            </div>
+            <div style="flex:1;">
+              <p style="font-size:1.05rem;font-weight:500;margin-bottom:6px;">{{ item.title }}</p>
+              <p style="color:var(--sage-dark);font-weight:600;margin-bottom:12px;">{{ item.final_line_price | money }}</p>
+              <div style="display:flex;align-items:center;gap:16px;">
+                <div style="display:flex;align-items:center;gap:10px;border:1.5px solid var(--beige);border-radius:30px;padding:4px 14px;">
+                  <a href="{{ routes.cart_url }}?updates[{{ item.key }}]={{ item.quantity | minus: 1 }}&checkout" style="font-size:1.2rem;color:var(--text-dark);">−</a>
+                  <span>{{ item.quantity }}</span>
+                  <a href="{{ routes.cart_url }}?updates[{{ item.key }}]={{ item.quantity | plus: 1 }}&checkout" style="font-size:1.2rem;color:var(--text-dark);">+</a>
+                </div>
+                <a href="{{ item.url_to_remove }}" style="font-size:0.8rem;letter-spacing:1px;text-transform:uppercase;color:var(--text-light);text-decoration:underline;">Remove</a>
+              </div>
+            </div>
+          </div>
+        {%- endfor -%}
+      </div>
+      <div style="background:var(--cream-warm);border-radius:var(--radius);padding:32px;position:sticky;top:100px;">
+        <h2 style="font-size:1.1rem;letter-spacing:2px;text-transform:uppercase;margin-bottom:24px;">Order Summary</h2>
+        <div style="display:flex;justify-content:space-between;margin-bottom:20px;font-size:1.05rem;">
+          <span>Subtotal</span><span style="font-weight:600;">{{ cart.total_price | money }}</span>
+        </div>
+        <p style="font-size:0.82rem;color:var(--text-light);margin-bottom:20px;font-style:italic;">Shipping calculated at checkout.</p>
+        <a href="/checkout" class="btn btn-primary btn-full">Checkout</a>
+        <a href="{{ routes.all_products_collection_url }}" class="btn btn-outline btn-full" style="margin-top:12px;">Continue Shopping</a>
+      </div>
+    </div>
+  {%- else -%}
+    <div style="text-align:center;padding:96px 0;">
+      <p style="font-size:1.2rem;font-style:italic;color:var(--text-light);margin-bottom:24px;">Your cart is empty.</p>
+      <a href="{{ routes.all_products_collection_url }}" class="btn btn-primary">Shop Now</a>
+    </div>
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "Cart",
+  "settings": []
+}
+{% endschema %}

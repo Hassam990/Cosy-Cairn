@@ -1,0 +1,51 @@
+<section class="featured-banner">
+  <div class="container">
+    <div class="featured-banner-inner">
+
+      <div class="featured-banner-content fade-in">
+        {%- if section.settings.label != blank -%}
+          <span class="banner-label">{{ section.settings.label }}</span>
+        {%- endif -%}
+        <h2>
+          {{ section.settings.heading_line1 }}<br>
+          <em>{{ section.settings.heading_line2 }}</em>
+        </h2>
+        {%- if section.settings.text != blank -%}
+          <p>{{ section.settings.text }}</p>
+        {%- endif -%}
+        {%- if section.settings.cta_label != blank -%}
+          <a href="{{ section.settings.cta_url }}" class="btn btn-primary">
+            {{ section.settings.cta_label }}
+          </a>
+        {%- endif -%}
+      </div>
+
+      <div class="featured-banner-image fade-in">
+        {%- if section.settings.image -%}
+          <img src="{{ section.settings.image | image_url: width: 800 }}"
+               alt="{{ section.settings.heading_line1 }} {{ section.settings.heading_line2 }}"
+               loading="lazy" width="800" height="600">
+        {%- else -%}
+          <div class="featured-banner-placeholder"></div>
+        {%- endif -%}
+      </div>
+
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Featured Banner",
+  "settings": [
+    { "type": "text",         "id": "label",         "label": "Label",           "default": "New Season" },
+    { "type": "text",         "id": "heading_line1", "label": "Heading line 1",  "default": "New Season," },
+    { "type": "text",         "id": "heading_line2", "label": "Heading line 2 (italic)", "default": "New Cosy" },
+    { "type": "textarea",     "id": "text",          "label": "Body text",       "default": "Discover our latest arrivals designed to bring softness, warmth, and a little everyday magic into your home. From hand-poured candles to woven textures, each piece is chosen with care." },
+    { "type": "text",         "id": "cta_label",     "label": "Button label",    "default": "Explore New In" },
+    { "type": "url",          "id": "cta_url",       "label": "Button URL",      "default": "/collections/new-in" },
+    { "type": "image_picker", "id": "image",         "label": "Banner image" }
+  ],
+  "presets": [{ "name": "Featured Banner" }]
+}
+{% endschema %}

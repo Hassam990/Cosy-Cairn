@@ -1,0 +1,6 @@
+{
+  "sections": {
+    "main": { "type": "page-main", "disabled": false }
+  },
+  "order": ["main"]
+}

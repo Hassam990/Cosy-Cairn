@@ -1,0 +1,20 @@
+{
+  "sections": {
+    "announcement-bar": { "type": "announcement-bar", "disabled": false },
+    "hero":             { "type": "hero",              "disabled": false },
+    "trust-badges":     { "type": "trust-badges",      "disabled": false },
+    "featured-categories": { "type": "featured-categories", "disabled": false },
+    "featured-products":   { "type": "featured-products",   "disabled": false },
+    "featured-banner":     { "type": "featured-banner",     "disabled": false },
+    "newsletter":          { "type": "newsletter",          "disabled": false }
+  },
+  "order": [
+    "announcement-bar",
+    "hero",
+    "trust-badges",
+    "featured-categories",
+    "featured-products",
+    "featured-banner",
+    "newsletter"
+  ]
+}
