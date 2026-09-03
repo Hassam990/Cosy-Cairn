@@ -2,31 +2,33 @@
   <div class="container">
     <div class="featured-banner-inner">
 
-      <div class="featured-banner-content fade-in">
-        {%- if section.settings.label != blank -%}
-          <span class="banner-label">{{ section.settings.label }}</span>
-        {%- endif -%}
+      <div class="featured-banner-content">
+        <span class="banner-label">{{ section.settings.label }}</span>
         <h2>
           {{ section.settings.heading_line1 }}<br>
           <em>{{ section.settings.heading_line2 }}</em>
         </h2>
-        {%- if section.settings.text != blank -%}
-          <p>{{ section.settings.text }}</p>
-        {%- endif -%}
-        {%- if section.settings.cta_label != blank -%}
-          <a href="{{ section.settings.cta_url }}" class="btn btn-primary">
-            {{ section.settings.cta_label }}
-          </a>
-        {%- endif -%}
+        <p>{{ section.settings.text }}</p>
+        <a href="{{ section.settings.cta_url | default: '/collections/new-in' }}" class="btn btn-primary">
+          {{ section.settings.cta_label }}
+        </a>
       </div>
 
-      <div class="featured-banner-image fade-in">
+      <div class="featured-banner-image">
         {%- if section.settings.image -%}
           <img src="{{ section.settings.image | image_url: width: 800 }}"
-               alt="{{ section.settings.heading_line1 }} {{ section.settings.heading_line2 }}"
+               alt="{{ section.settings.heading_line1 | escape }}"
                loading="lazy" width="800" height="600">
         {%- else -%}
-          <div class="featured-banner-placeholder"></div>
+          <div class="featured-banner-placeholder">
+            <div class="featured-banner-placeholder-inner">
+              <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="none" viewBox="0 0 24 24" stroke="rgba(122,143,106,0.5)" stroke-width="0.8">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/>
+                <polyline points="9 22 9 12 15 12 15 22"/>
+              </svg>
+              <p style="color:var(--text-light);font-style:italic;font-size:0.9rem;margin-top:12px;">Add an image in the theme editor</p>
+            </div>
+          </div>
         {%- endif -%}
       </div>
 
@@ -40,11 +42,11 @@
   "settings": [
     { "type": "text",         "id": "label",         "label": "Label",           "default": "New Season" },
     { "type": "text",         "id": "heading_line1", "label": "Heading line 1",  "default": "New Season," },
-    { "type": "text",         "id": "heading_line2", "label": "Heading line 2 (italic)", "default": "New Cosy" },
+    { "type": "text",         "id": "heading_line2", "label": "Heading line 2",  "default": "New Cosy" },
     { "type": "textarea",     "id": "text",          "label": "Body text",       "default": "Discover our latest arrivals designed to bring softness, warmth, and a little everyday magic into your home. From hand-poured candles to woven textures, each piece is chosen with care." },
     { "type": "text",         "id": "cta_label",     "label": "Button label",    "default": "Explore New In" },
-    { "type": "url",          "id": "cta_url",       "label": "Button URL",      "default": "/collections/new-in" },
-    { "type": "image_picker", "id": "image",         "label": "Banner image" }
+    { "type": "url",          "id": "cta_url",       "label": "Button URL" },
+    { "type": "image_picker", "id": "image",         "label": "Image" }
   ],
   "presets": [{ "name": "Featured Banner" }]
 }

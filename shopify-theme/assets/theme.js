@@ -182,8 +182,15 @@
 
   // ===== Fade-in Observer =====
   function initFadeIn() {
+    // Mark body so CSS knows JS is active — content visible by default without this
+    document.body.classList.add('js-loaded');
     const els = document.querySelectorAll('.fade-in');
     if (!els.length) return;
+    // Immediately show anything already in viewport
+    els.forEach(el => {
+      const rect = el.getBoundingClientRect();
+      if (rect.top < window.innerHeight) el.classList.add('visible');
+    });
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -191,8 +198,10 @@
           observer.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.12 });
-    els.forEach(el => observer.observe(el));
+    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+    els.forEach(el => {
+      if (!el.classList.contains('visible')) observer.observe(el);
+    });
   }
 
   // ===== Add-to-Cart forms =====

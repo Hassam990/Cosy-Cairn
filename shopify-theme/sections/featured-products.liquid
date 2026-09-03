@@ -1,27 +1,62 @@
+{%- liquid
+  assign fallback_titles  = 'Hand-Poured Lavender Candle,Vintage Floral Teacup Set,Woven Seagrass Basket,Linen Throw Pillow,Dried Flower Bouquet,Artisan Ceramic Vase,Chunky Knit Throw Blanket,Soy Wax Candle Trio' | split: ','
+  assign fallback_prices  = '£18.00,£32.00,£24.50,£28.00,£22.00,£36.00,£58.00,£42.00' | split: ','
+  assign fallback_badges  = 'Best Seller,,Sale,New,,New,,' | split: ','
+  assign fallback_colors  = '#b8c9a9,#d4c4b0,#c9b8a8,#c4bfb0,#d0c4b8,#b8bfc9,#ccc4b4,#b8c9a9' | split: ','
+-%}
+
 <section class="section section--warm">
   <div class="container">
-    <div class="section-header fade-in">
+    <div class="section-header">
       <h2 class="section-title">{{ section.settings.title }}</h2>
       <p class="section-subtitle">{{ section.settings.subtitle }}</p>
       <div class="section-divider"></div>
     </div>
 
     <div class="product-grid">
-      {%- assign src_collection = collections[section.settings.collection] -%}
-      {%- if src_collection != blank -%}
-        {%- for product in src_collection.products limit: section.settings.products_count -%}
-          {%- render 'product-card', product: product -%}
-        {%- endfor -%}
-      {%- else -%}
-        {%- for product in collections.all.products limit: section.settings.products_count -%}
-          {%- render 'product-card', product: product -%}
+      {%- assign src = collections[section.settings.collection] -%}
+      {%- assign product_list = src.products | default: collections.all.products -%}
+      {%- assign count = 0 -%}
+
+      {%- for product in product_list limit: section.settings.products_count -%}
+        {%- render 'product-card', product: product -%}
+        {%- assign count = count | plus: 1 -%}
+      {%- endfor -%}
+
+      {%- comment -%}Fill remaining slots with hardcoded placeholders{%- endcomment -%}
+      {%- assign remaining = section.settings.products_count | minus: count -%}
+      {%- if remaining > 0 -%}
+        {%- for i in (1..remaining) -%}
+          {%- assign idx   = count | plus: forloop.index0 -%}
+          {%- assign ptitle = fallback_titles[idx] | default: 'Cosy Home Piece' -%}
+          {%- assign pprice = fallback_prices[idx]  | default: '£24.00' -%}
+          {%- assign pbadge = fallback_badges[idx] -%}
+          {%- assign pcolor = fallback_colors[idx]  | default: '#e5ddd3' -%}
+          <div class="product-card">
+            <div class="product-card-image">
+              <div class="product-card-placeholder" style="background: linear-gradient(160deg, {{ pcolor }}, #f8f5f0); position:absolute; inset:0; display:flex; align-items:center; justify-content:center;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="none" viewBox="0 0 24 24" stroke="rgba(92,92,82,0.3)" stroke-width="1">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                </svg>
+              </div>
+              {%- if pbadge != blank and pbadge != '' -%}
+                <span class="product-badge{% if pbadge == 'Sale' %} sale{% elsif pbadge == 'New' %} new{% endif %}">{{ pbadge }}</span>
+              {%- endif -%}
+              <button class="product-card-quick" disabled>Add to Cart</button>
+            </div>
+            <div class="product-card-info">
+              <h3 class="product-card-title">{{ ptitle }}</h3>
+              <div class="product-card-price">
+                <span class="price">{{ pprice }}</span>
+              </div>
+            </div>
+          </div>
         {%- endfor -%}
       {%- endif -%}
     </div>
 
     <div class="section-cta">
-      <a href="{{ section.settings.cta_url | default: routes.all_products_collection_url }}"
-         class="btn btn-outline fade-in">
+      <a href="{{ section.settings.cta_url | default: '/collections/all' }}" class="btn btn-outline">
         {{ section.settings.cta_label }}
       </a>
     </div>
@@ -32,12 +67,12 @@
 {
   "name": "Featured Products",
   "settings": [
-    { "type": "text",            "id": "title",          "label": "Section title",    "default": "Shop Our Favourites" },
-    { "type": "text",            "id": "subtitle",       "label": "Section subtitle", "default": "Hand-picked pieces we think you'll love" },
-    { "type": "collection",      "id": "collection",     "label": "Collection" },
-    { "type": "range",           "id": "products_count", "label": "Number of products", "min": 4, "max": 12, "step": 2, "default": 8 },
-    { "type": "text",            "id": "cta_label",      "label": "Button label",     "default": "View All Products" },
-    { "type": "url",             "id": "cta_url",        "label": "Button URL" }
+    { "type": "text",       "id": "title",          "label": "Title",              "default": "Shop Our Favourites" },
+    { "type": "text",       "id": "subtitle",       "label": "Subtitle",           "default": "Hand-picked pieces we think you'll love" },
+    { "type": "collection", "id": "collection",     "label": "Collection" },
+    { "type": "range",      "id": "products_count", "label": "Number of products", "min": 4, "max": 12, "step": 2, "default": 8 },
+    { "type": "text",       "id": "cta_label",      "label": "Button label",       "default": "View All Products" },
+    { "type": "url",        "id": "cta_url",        "label": "Button URL" }
   ],
   "presets": [{ "name": "Featured Products" }]
 }

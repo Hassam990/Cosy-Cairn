@@ -1,51 +1,68 @@
+{%- liquid
+  assign cat_titles = 'Home Decor,Candles,Kitchen & Dining,Textiles,Gifts' | split: ','
+  assign cat_handles = 'home-decor,candles,kitchen-dining,textiles,gifts' | split: ','
+  assign cat_initials = 'HD,CA,KD,TX,GF' | split: ','
+  assign cat_colors = '#d4c4b0,#b8c9a9,#c9b8a8,#c4bfb0,#ccc4b4' | split: ','
+-%}
+
 <section class="section">
   <div class="container">
-    <div class="section-header fade-in">
+    <div class="section-header">
       <h2 class="section-title">{{ section.settings.title }}</h2>
       <p class="section-subtitle">{{ section.settings.subtitle }}</p>
       <div class="section-divider"></div>
     </div>
 
     <div class="category-grid">
-      {%- if section.blocks.size > 0 -%}
-        {%- for block in section.blocks -%}
-          {%- assign col = collections[block.settings.collection] -%}
-          <a href="{{ col.url | default: '/collections/all' }}" class="category-card fade-in" {{ block.shopify_attributes }}>
+      {%- for block in section.blocks -%}
+        {%- assign col = collections[block.settings.collection] -%}
+        {%- assign idx = forloop.index0 -%}
+        {%- assign fallback_title = cat_titles[idx] | default: 'Collection' -%}
+        {%- assign fallback_handle = cat_handles[idx] | default: 'all' -%}
+        {%- assign fallback_initial = cat_initials[idx] | default: '—' -%}
+        {%- assign fallback_color = cat_colors[idx] | default: '#e5ddd3' -%}
+
+        <a href="{{ col.url | default: '/collections/' | append: fallback_handle }}"
+           class="category-card" {{ block.shopify_attributes }}>
+          <div class="category-card-image">
+            {%- if col != blank and col.image -%}
+              <img src="{{ col.image | image_url: width: 600 }}"
+                   alt="{{ col.title | escape }}" loading="lazy" width="600" height="700">
+            {%- elsif col != blank and col.products.first.featured_image -%}
+              <img src="{{ col.products.first.featured_image | image_url: width: 600 }}"
+                   alt="{{ col.title | escape }}" loading="lazy" width="600" height="700">
+            {%- else -%}
+              <div class="category-card-placeholder" style="background: linear-gradient(160deg, {{ fallback_color }}, #f8f5f0);">
+                <span>{{ fallback_initial }}</span>
+              </div>
+            {%- endif -%}
+          </div>
+          <div class="category-card-overlay">
+            <h3 class="category-card-title">{{ col.title | default: fallback_title }}</h3>
+            <span class="category-card-link">Shop Now</span>
+          </div>
+        </a>
+
+      {%- else -%}
+        {%- comment -%}No blocks — show 5 hardcoded placeholder cards{%- endcomment -%}
+        {%- for i in (0..4) -%}
+          {%- assign title   = cat_titles[i] -%}
+          {%- assign handle  = cat_handles[i] -%}
+          {%- assign initial = cat_initials[i] -%}
+          {%- assign color   = cat_colors[i] -%}
+          <a href="/collections/{{ handle }}" class="category-card">
             <div class="category-card-image">
-              {%- if col != blank and col.image -%}
-                <img src="{{ col.image | image_url: width: 600 }}"
-                     alt="{{ col.title | escape }}"
-                     loading="lazy" width="600" height="700">
-              {%- elsif col != blank and col.products.first.featured_image -%}
-                <img src="{{ col.products.first.featured_image | image_url: width: 600 }}"
-                     alt="{{ col.title | escape }}"
-                     loading="lazy" width="600" height="700">
-              {%- else -%}
-                <div class="category-card-placeholder">
-                  {{ col.title | default: 'Shop' | slice: 0, 2 | upcase }}
-                </div>
-              {%- endif -%}
+              <div class="category-card-placeholder" style="background: linear-gradient(160deg, {{ color }}, #f8f5f0);">
+                <span>{{ initial }}</span>
+              </div>
             </div>
             <div class="category-card-overlay">
-              <h3 class="category-card-title">{{ col.title | default: block.settings.collection | replace: '-', ' ' | capitalize }}</h3>
+              <h3 class="category-card-title">{{ title }}</h3>
               <span class="category-card-link">Shop Now</span>
             </div>
           </a>
         {%- endfor -%}
-      {%- else -%}
-        {%- assign placeholder_names = 'Home Decor,Candles,Kitchen & Dining,Textiles,Gifts' | split: ',' -%}
-        {%- for name in placeholder_names -%}
-          <div class="category-card fade-in">
-            <div class="category-card-image">
-              <div class="category-card-placeholder">{{ name | slice: 0, 2 | upcase }}</div>
-            </div>
-            <div class="category-card-overlay">
-              <h3 class="category-card-title">{{ name }}</h3>
-              <span class="category-card-link">Shop Now</span>
-            </div>
-          </div>
-        {%- endfor -%}
-      {%- endif -%}
+      {%- endfor -%}
     </div>
   </div>
 </section>
@@ -55,8 +72,8 @@
   "name": "Featured Categories",
   "max_blocks": 5,
   "settings": [
-    { "type": "text", "id": "title",    "label": "Section title",    "default": "Shop by Category" },
-    { "type": "text", "id": "subtitle", "label": "Section subtitle", "default": "Curated collections for every cosy corner" }
+    { "type": "text", "id": "title",    "label": "Title",    "default": "Shop by Category" },
+    { "type": "text", "id": "subtitle", "label": "Subtitle", "default": "Curated collections for every cosy corner" }
   ],
   "blocks": [
     {
@@ -67,17 +84,15 @@
       ]
     }
   ],
-  "presets": [
-    {
-      "name": "Featured Categories",
-      "blocks": [
-        { "type": "category" },
-        { "type": "category" },
-        { "type": "category" },
-        { "type": "category" },
-        { "type": "category" }
-      ]
-    }
-  ]
+  "presets": [{
+    "name": "Featured Categories",
+    "blocks": [
+      { "type": "category" },
+      { "type": "category" },
+      { "type": "category" },
+      { "type": "category" },
+      { "type": "category" }
+    ]
+  }]
 }
 {% endschema %}

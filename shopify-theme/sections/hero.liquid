@@ -8,7 +8,7 @@
               {{ section.settings.image | image_url: width: 1200 }} 1200w,
               {{ section.settings.image | image_url: width: 1920 }} 1920w"
       sizes="100vw"
-      alt="{{ section.settings.heading_line1 }} {{ section.settings.heading_line2 }}"
+      alt="{{ section.settings.heading_line1 | escape }}"
       loading="eager"
       fetchpriority="high">
   {%- else -%}
@@ -18,13 +18,11 @@
   <div class="hero-overlay"></div>
 
   <div class="hero-content">
-    {%- if section.settings.eyebrow != blank -%}
-      <div class="hero-eyebrow">
-        <span class="hero-eyebrow-line"></span>
-        <span class="hero-eyebrow-text">{{ section.settings.eyebrow }}</span>
-        <span class="hero-eyebrow-line"></span>
-      </div>
-    {%- endif -%}
+    <div class="hero-eyebrow">
+      <span class="hero-eyebrow-line"></span>
+      <span class="hero-eyebrow-text">{{ section.settings.eyebrow }}</span>
+      <span class="hero-eyebrow-line"></span>
+    </div>
 
     <h1 class="hero-title">
       {{ section.settings.heading_line1 }}<br>
@@ -39,21 +37,15 @@
       <span></span>
     </div>
 
-    {%- if section.settings.tagline != blank -%}
-      <p class="hero-tagline">{{ section.settings.tagline }}</p>
-    {%- endif -%}
+    <p class="hero-tagline">{{ section.settings.tagline }}</p>
 
     <div class="hero-actions">
-      {%- if section.settings.cta1_label != blank -%}
-        <a href="{{ section.settings.cta1_url | default: '/collections/all' }}" class="btn btn-hero-primary">
-          {{ section.settings.cta1_label }}
-        </a>
-      {%- endif -%}
-      {%- if section.settings.cta2_label != blank -%}
-        <a href="{{ section.settings.cta2_url | default: '/collections' }}" class="btn btn-hero-outline">
-          {{ section.settings.cta2_label }}
-        </a>
-      {%- endif -%}
+      <a href="{{ section.settings.cta1_url | default: '/collections/all' }}" class="btn btn-hero-primary">
+        {{ section.settings.cta1_label }}
+      </a>
+      <a href="{{ section.settings.cta2_url | default: '/collections' }}" class="btn btn-hero-outline">
+        {{ section.settings.cta2_label }}
+      </a>
     </div>
 
     <p class="hero-scroll-hint">
@@ -70,15 +62,15 @@
 {
   "name": "Hero",
   "settings": [
-    { "type": "image_picker", "id": "image",         "label": "Hero background image" },
-    { "type": "text",         "id": "eyebrow",        "label": "Eyebrow text",              "default": "Welcome to" },
-    { "type": "text",         "id": "heading_line1",  "label": "Heading line 1",            "default": "The Cosy" },
-    { "type": "text",         "id": "heading_line2",  "label": "Heading line 2 (italic)",   "default": "Cairn" },
-    { "type": "textarea",     "id": "tagline",        "label": "Tagline",                   "default": "Beautiful little finds for homes full of light and a little wonder" },
-    { "type": "text",         "id": "cta1_label",     "label": "Button 1 label",            "default": "Shop Now" },
-    { "type": "url",          "id": "cta1_url",       "label": "Button 1 URL" },
-    { "type": "text",         "id": "cta2_label",     "label": "Button 2 label",            "default": "Explore Collections" },
-    { "type": "url",          "id": "cta2_url",       "label": "Button 2 URL" }
+    { "type": "image_picker", "id": "image",        "label": "Background image" },
+    { "type": "text",  "id": "eyebrow",       "label": "Eyebrow text",            "default": "Welcome to" },
+    { "type": "text",  "id": "heading_line1", "label": "Heading line 1",          "default": "The Cosy" },
+    { "type": "text",  "id": "heading_line2", "label": "Heading line 2 (italic)", "default": "Cairn" },
+    { "type": "textarea", "id": "tagline",    "label": "Tagline",                 "default": "Beautiful little finds for homes full of light and a little wonder" },
+    { "type": "text",  "id": "cta1_label",    "label": "Button 1 label",          "default": "Shop Now" },
+    { "type": "url",   "id": "cta1_url",      "label": "Button 1 URL" },
+    { "type": "text",  "id": "cta2_label",    "label": "Button 2 label",          "default": "Explore Collections" },
+    { "type": "url",   "id": "cta2_url",      "label": "Button 2 URL" }
   ],
   "presets": [{ "name": "Hero" }]
 }
