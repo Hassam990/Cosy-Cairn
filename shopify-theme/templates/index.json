@@ -6,11 +6,11 @@
         "eyebrow": "Welcome to",
         "heading_line1": "The Cosy",
         "heading_line2": "Cairn",
-        "tagline": "Beautiful little finds for homes full of light and a little wonder",
+        "tagline": "Beautiful little finds for homes\nfull of light and a little wonder",
         "cta1_label": "Shop Now",
-        "cta1_url": "/collections/all",
+        "cta1_url": "\/collections\/all",
         "cta2_label": "Explore Collections",
-        "cta2_url": "/collections"
+        "cta2_url": "\/collections"
       }
     },
     "trust-badges": {
@@ -32,18 +32,33 @@
     },
     "featured-categories": {
       "type": "featured-categories",
+      "blocks": {
+        "cat1": {
+          "type": "category",
+          "settings": { "collection": "home-decor" }
+        },
+        "cat2": {
+          "type": "category",
+          "settings": { "collection": "candles" }
+        },
+        "cat3": {
+          "type": "category",
+          "settings": { "collection": "kitchen-dining" }
+        },
+        "cat4": {
+          "type": "category",
+          "settings": { "collection": "textiles" }
+        },
+        "cat5": {
+          "type": "category",
+          "settings": { "collection": "gifts" }
+        }
+      },
+      "block_order": ["cat1","cat2","cat3","cat4","cat5"],
       "settings": {
         "title": "Shop by Category",
         "subtitle": "Curated collections for every cosy corner"
-      },
-      "blocks": {
-        "cat1": { "type": "category", "settings": { "collection": "home-decor" } },
-        "cat2": { "type": "category", "settings": { "collection": "candles" } },
-        "cat3": { "type": "category", "settings": { "collection": "kitchen-dining" } },
-        "cat4": { "type": "category", "settings": { "collection": "textiles" } },
-        "cat5": { "type": "category", "settings": { "collection": "gifts" } }
-      },
-      "block_order": ["cat1", "cat2", "cat3", "cat4", "cat5"]
+      }
     },
     "featured-products": {
       "type": "featured-products",
@@ -52,7 +67,7 @@
         "subtitle": "Hand-picked pieces we think you'll love",
         "products_count": 8,
         "cta_label": "View All Products",
-        "cta_url": "/collections/all"
+        "cta_url": "\/collections\/all"
       }
     },
     "featured-banner": {
@@ -61,9 +76,9 @@
         "label": "New Season",
         "heading_line1": "New Season,",
         "heading_line2": "New Cosy",
-        "text": "Discover our latest arrivals designed to bring softness, warmth, and a little everyday magic into your home. From hand-poured candles to woven textures, each piece is chosen with care.",
+        "text": "Discover our latest arrivals designed to bring softness, warmth, and a little everyday magic into your home.",
         "cta_label": "Explore New In",
-        "cta_url": "/collections/new-in"
+        "cta_url": "\/collections\/new-in"
       }
     },
     "newsletter": {
@@ -78,12 +93,5 @@
       }
     }
   },
-  "order": [
-    "hero",
-    "trust-badges",
-    "featured-categories",
-    "featured-products",
-    "featured-banner",
-    "newsletter"
-  ]
+  "order": ["hero","trust-badges","featured-categories","featured-products","featured-banner","newsletter"]
 }
