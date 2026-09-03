@@ -1,0 +1,6 @@
+{
+  "sections": {
+    "main": { "type": "about-main", "disabled": false, "settings": {} }
+  },
+  "order": ["main"]
+}

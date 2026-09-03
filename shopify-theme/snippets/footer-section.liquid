@@ -1,0 +1,56 @@
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+
+      <div class="footer-brand">
+        <h3 class="footer-brand-name">{{ shop.name }}</h3>
+        <p>Beautiful little finds for homes full of light and a little wonder. Thoughtfully chosen, lovingly packed, and sent with care.</p>
+        <div class="footer-social">
+          <a href="{{ settings.social_instagram | default: '#' }}" aria-label="Instagram" {% if settings.social_instagram != blank %}target="_blank" rel="noopener"{% endif %}>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          </a>
+          <a href="{{ settings.social_pinterest | default: '#' }}" aria-label="Pinterest" {% if settings.social_pinterest != blank %}target="_blank" rel="noopener"{% endif %}>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M8 12c0-2.76 1.79-5 4-5s4 2.24 4 5c0 2.76-1.79 5-4 5"/></svg>
+          </a>
+          <a href="{{ settings.social_facebook | default: '#' }}" aria-label="Facebook" {% if settings.social_facebook != blank %}target="_blank" rel="noopener"{% endif %}>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="footer-column">
+        <h4>Shop</h4>
+        <ul>
+          <li><a href="{{ routes.all_products_collection_url }}">All Products</a></li>
+          <li><a href="/collections/new-in">New In</a></li>
+          <li><a href="/collections">Collections</a></li>
+          <li><a href="/collections/gifts">Gifts</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-column">
+        <h4>Help</h4>
+        <ul>
+          <li><a href="/pages/contact">Contact Us</a></li>
+          <li><a href="{{ shop.url }}/policies/shipping-policy">Shipping &amp; Returns</a></li>
+          <li><a href="/pages/faq">FAQ</a></li>
+          <li><a href="{{ shop.url }}/policies/privacy-policy">Privacy Policy</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-column">
+        <h4>About</h4>
+        <ul>
+          <li><a href="/pages/about">Our Story</a></li>
+          <li><a href="/pages/about">Sustainability</a></li>
+          <li><a href="/pages/contact">Stockists</a></li>
+        </ul>
+      </div>
+
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}. All rights reserved.</p>
+      <p>Designed with love for cosy homes.</p>
+    </div>
+  </div>
+</footer>

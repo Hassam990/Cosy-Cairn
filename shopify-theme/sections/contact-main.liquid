@@ -1,0 +1,101 @@
+<!-- Page Header -->
+<section class="page-header">
+  <div class="container">
+    <h1>{{ section.settings.title }}</h1>
+    <p>{{ section.settings.subtitle }}</p>
+  </div>
+</section>
+
+<!-- Contact -->
+<section class="section" style="padding-top:60px;">
+  <div class="container">
+    <div class="contact-grid">
+
+      <!-- Info -->
+      <div class="contact-info">
+        <h2>{{ section.settings.info_heading }}</h2>
+        <p>{{ section.settings.info_text }}</p>
+
+        <div class="contact-detail">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+          <div>
+            <h4>Email</h4>
+            <p>{{ section.settings.email | default: 'hello@thecosycairn.co.uk' }}</p>
+          </div>
+        </div>
+
+        <div class="contact-detail">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+          <div>
+            <h4>Location</h4>
+            <p>{{ section.settings.location | default: 'United Kingdom' }}</p>
+          </div>
+        </div>
+
+        <div class="contact-detail">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          <div>
+            <h4>Response Time</h4>
+            <p>{{ section.settings.response_time | default: 'We aim to reply within 1-2 business days' }}</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Form -->
+      {%- form 'contact', id: 'ContactForm' -%}
+        <div class="contact-form">
+          {%- if form.posted_successfully? -%}
+            <div class="contact-success">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" width="32" height="32"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              <h3>Message sent!</h3>
+              <p>Thank you for getting in touch. We'll be back with you soon.</p>
+            </div>
+          {%- else -%}
+            {%- if form.errors -%}
+              <div class="contact-error">{{ form.errors | default_errors }}</div>
+            {%- endif -%}
+            <div class="form-group">
+              <label for="ContactForm-name">Your Name</label>
+              <input type="text" id="ContactForm-name" name="contact[name]"
+                     value="{% if form.name %}{{ form.name }}{% elsif customer %}{{ customer.name }}{% endif %}"
+                     autocomplete="name" required>
+            </div>
+            <div class="form-group">
+              <label for="ContactForm-email">Email Address</label>
+              <input type="email" id="ContactForm-email" name="contact[email]"
+                     value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}"
+                     autocomplete="email" required>
+            </div>
+            <div class="form-group">
+              <label for="ContactForm-subject">Subject</label>
+              <input type="text" id="ContactForm-subject" name="contact[subject]"
+                     value="{{ form.subject }}">
+            </div>
+            <div class="form-group">
+              <label for="ContactForm-message">Message</label>
+              <textarea id="ContactForm-message" name="contact[body]" rows="6" required>{{ form.body }}</textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Send Message</button>
+          {%- endif -%}
+        </div>
+      {%- endform -%}
+
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Contact",
+  "settings": [
+    { "type": "text",     "id": "title",         "label": "Page title",      "default": "Get in Touch" },
+    { "type": "text",     "id": "subtitle",      "label": "Page subtitle",   "default": "We'd love to hear from you" },
+    { "type": "text",     "id": "info_heading",  "label": "Info heading",    "default": "Send Us a Message" },
+    { "type": "textarea", "id": "info_text",     "label": "Info text",       "default": "Whether you have a question about an order, a product, or just want to say hello — we're here to help. Fill in the form and we'll get back to you as soon as we can." },
+    { "type": "text",     "id": "email",         "label": "Email address",   "default": "hello@thecosycairn.co.uk" },
+    { "type": "text",     "id": "location",      "label": "Location",        "default": "United Kingdom" },
+    { "type": "text",     "id": "response_time", "label": "Response time",   "default": "We aim to reply within 1-2 business days" }
+  ],
+  "presets": [{ "name": "Contact" }]
+}
+{% endschema %}

@@ -1,0 +1,150 @@
+{%- liquid
+  assign fallback_titles  = 'Hand-Poured Lavender Candle,Vintage Floral Teacup Set,Woven Seagrass Basket,Linen Throw Pillow,Dried Flower Bouquet,Artisan Ceramic Vase,Chunky Knit Throw Blanket,Soy Wax Candle Trio' | split: ','
+  assign fallback_prices  = '£18.00,£32.00,£24.50,£28.00,£22.00,£36.00,£58.00,£42.00' | split: ','
+  assign fallback_compare = ',,£30.00,,,,,£48.00' | split: ','
+  assign fallback_badges  = 'Best Seller,,Sale,New,,New,,' | split: ','
+  assign fallback_types   = 'Candles,Kitchen Dining,Home Decor,Textiles,Home Decor,Home Decor,Textiles,Candles' | split: ','
+  assign fallback_colors  = '#b8c9a9,#d4c4b0,#c9b8a8,#c4bfb0,#d0c4b8,#b8bfc9,#ccc4b4,#b8c9a9' | split: ','
+-%}
+
+<!-- Page Header -->
+<section class="page-header">
+  <div class="container">
+    <h1>{{ section.settings.title }}</h1>
+    <p>{{ section.settings.subtitle }}</p>
+  </div>
+</section>
+
+<section class="section" style="padding-top:48px;">
+  <div class="container">
+    <div class="shop-layout">
+
+      <!-- Sidebar -->
+      <aside class="shop-sidebar">
+        <div class="filter-group">
+          <h3>Categories</h3>
+          <div class="filter-options">
+            {%- assign cat_names = 'Home Decor,Candles,Kitchen & Dining,Textiles,Gifts' | split: ',' -%}
+            {%- assign cat_handles = 'home-decor,candles,kitchen-dining,textiles,gifts' | split: ',' -%}
+            {%- for name in cat_names -%}
+              <label>
+                <input type="checkbox" value="{{ cat_handles[forloop.index0] }}" class="filter-check">
+                {{ name }}
+              </label>
+            {%- endfor -%}
+          </div>
+        </div>
+
+        <div class="filter-group">
+          <h3>Collections</h3>
+          <div class="filter-options">
+            {%- for col in collections limit: 8 -%}
+              {%- unless col.handle == 'frontpage' or col.handle == 'all' -%}
+                <label>
+                  <input type="checkbox" value="{{ col.handle }}" class="filter-check">
+                  {{ col.title }}
+                </label>
+              {%- endunless -%}
+            {%- else -%}
+              {%- for name in cat_names -%}
+                <label>
+                  <input type="checkbox" value="{{ cat_handles[forloop.index0] }}" class="filter-check">
+                  {{ name }}
+                </label>
+              {%- endfor -%}
+            {%- endfor -%}
+          </div>
+        </div>
+
+        <div class="filter-group" style="text-align:center;">
+          <p style="color:var(--text-light);font-style:italic;font-size:0.9rem;line-height:1.6;">
+            Need help finding something?<br>
+            <a href="/pages/contact" style="color:var(--sage-dark);text-decoration:underline;">Get in touch</a>
+          </p>
+        </div>
+      </aside>
+
+      <!-- Products -->
+      <div class="shop-main-content">
+        <div class="shop-toolbar">
+          {%- assign total = collections.all.products_count | default: 16 -%}
+          <p class="shop-result-count">{{ total }} product{% if total != 1 %}s{% endif %}</p>
+          <form method="get" action="{{ request.path }}">
+            <select name="sort_by" class="sort-select" onchange="this.form.submit()" aria-label="Sort products">
+              <option value="manual" {% if collection.sort_by == 'manual' %}selected{% endif %}>Sort by: Featured</option>
+              <option value="price-ascending" {% if collection.sort_by == 'price-ascending' %}selected{% endif %}>Price: Low to High</option>
+              <option value="price-descending" {% if collection.sort_by == 'price-descending' %}selected{% endif %}>Price: High to Low</option>
+              <option value="title-ascending" {% if collection.sort_by == 'title-ascending' %}selected{% endif %}>Name: A to Z</option>
+              <option value="created-descending" {% if collection.sort_by == 'created-descending' %}selected{% endif %}>Newest First</option>
+            </select>
+          </form>
+        </div>
+
+        <div class="product-grid shop-grid" id="shop-product-grid">
+          {%- assign shop_products = collections.all.products -%}
+          {%- assign rendered = 0 -%}
+
+          {%- for product in shop_products -%}
+            {%- render 'product-card', product: product -%}
+            {%- assign rendered = rendered | plus: 1 -%}
+          {%- endfor -%}
+
+          {%- comment -%}Fill with placeholders if fewer than 8 real products{%- endcomment -%}
+          {%- if rendered < 8 -%}
+            {%- assign needed = 8 | minus: rendered -%}
+            {%- for i in (1..needed) -%}
+              {%- assign idx   = rendered | plus: forloop.index0 -%}
+              {%- assign pt    = fallback_titles[idx]  | default: 'Cosy Home Piece' -%}
+              {%- assign pp    = fallback_prices[idx]  | default: '£24.00' -%}
+              {%- assign pc    = fallback_compare[idx] -%}
+              {%- assign pb    = fallback_badges[idx] -%}
+              {%- assign ptype = fallback_types[idx]   | default: 'Home Decor' -%}
+              {%- assign pclr  = fallback_colors[idx]  | default: '#e5ddd3' -%}
+              <div class="product-card">
+                <div class="product-card-image">
+                  <div style="position:absolute;inset:0;background:linear-gradient(160deg,{{ pclr }},#f8f5f0);display:flex;align-items:center;justify-content:center;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="none" viewBox="0 0 24 24" stroke="rgba(92,92,82,0.25)" stroke-width="1"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                  </div>
+                  {%- if pb != blank and pb != '' -%}
+                    <span class="product-badge{% if pb == 'Sale' %} sale{% elsif pb == 'New' %} new{% endif %}">{{ pb }}</span>
+                  {%- endif -%}
+                  <button class="product-card-quick" disabled>Add to Cart</button>
+                </div>
+                <div class="product-card-info">
+                  <p style="font-size:0.68rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--text-light);margin-bottom:6px;">{{ ptype }}</p>
+                  <h3 class="product-card-title">{{ pt }}</h3>
+                  <div class="product-card-price">
+                    {%- if pc != blank and pc != '' -%}
+                      <span class="price price--sale">{{ pp }}</span>
+                      <span class="price price--original">{{ pc }}</span>
+                    {%- else -%}
+                      <span class="price">{{ pp }}</span>
+                    {%- endif -%}
+                  </div>
+                </div>
+              </div>
+            {%- endfor -%}
+          {%- endif -%}
+        </div>
+
+        {%- if paginate.pages > 1 -%}
+          <div style="text-align:center;padding:48px 0;">
+            {{ paginate | default_pagination }}
+          </div>
+        {%- endif -%}
+      </div>
+
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Shop",
+  "settings": [
+    { "type": "text", "id": "title",    "label": "Page title",    "default": "Shop" },
+    { "type": "text", "id": "subtitle", "label": "Page subtitle", "default": "Thoughtfully chosen pieces for your cosy home" }
+  ],
+  "presets": [{ "name": "Shop" }]
+}
+{% endschema %}

@@ -1,6 +1,12 @@
 {
   "sections": {
-    "main": { "type": "collection-main", "disabled": false }
+    "main": {
+      "type": "collection-main",
+      "disabled": false,
+      "settings": {
+        "products_per_page": 16
+      }
+    }
   },
   "order": ["main"]
 }

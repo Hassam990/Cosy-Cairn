@@ -1,0 +1,114 @@
+<!-- Page Header -->
+<section class="page-header">
+  <div class="container">
+    <h1>{{ section.settings.title }}</h1>
+    <p>{{ section.settings.subtitle }}</p>
+  </div>
+</section>
+
+<!-- About Intro -->
+<section class="section" style="padding-top:60px;">
+  <div class="container">
+    <div class="about-intro">
+      <div class="about-intro-image">
+        {%- if section.settings.intro_image -%}
+          <img src="{{ section.settings.intro_image | image_url: width: 800 }}"
+               alt="{{ section.settings.intro_heading | escape }}" loading="lazy">
+        {%- else -%}
+          <img src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=800&h=600&fit=crop"
+               alt="The Cosy Cairn workspace" loading="lazy">
+        {%- endif -%}
+      </div>
+      <div class="about-intro-content">
+        <h2>{{ section.settings.intro_heading }}</h2>
+        <p>{{ section.settings.intro_text1 }}</p>
+        <p>{{ section.settings.intro_text2 }}</p>
+        <p>{{ section.settings.intro_text3 }}</p>
+        <a href="{{ routes.all_products_collection_url }}" class="btn btn-primary">Explore the Shop</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Values -->
+<section class="section" style="background-color:var(--cream-warm);">
+  <div class="container">
+    <div class="section-header">
+      <h2 class="section-title">{{ section.settings.values_title }}</h2>
+      <p class="section-subtitle">{{ section.settings.values_subtitle }}</p>
+      <div class="section-divider"></div>
+    </div>
+    <div class="values-grid">
+
+      <div class="value-card">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+        <h3>{{ section.settings.val1_title }}</h3>
+        <p>{{ section.settings.val1_text }}</p>
+      </div>
+
+      <div class="value-card">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        <h3>{{ section.settings.val2_title }}</h3>
+        <p>{{ section.settings.val2_text }}</p>
+      </div>
+
+      <div class="value-card">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+        <h3>{{ section.settings.val3_title }}</h3>
+        <p>{{ section.settings.val3_text }}</p>
+      </div>
+
+      <div class="value-card">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
+        <h3>{{ section.settings.val4_title }}</h3>
+        <p>{{ section.settings.val4_text }}</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Newsletter -->
+<section class="newsletter">
+  <div class="container">
+    <div class="newsletter-icon">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+    </div>
+    <h2>Join Our Cosy Corner</h2>
+    <p>Be the first to know about new arrivals, exclusive offers, and little moments of wonder.</p>
+    {%- form 'customer', id: 'about-newsletter' -%}
+      <input type="hidden" name="contact[tags]" value="newsletter">
+      <div class="newsletter-form">
+        <input type="email" name="contact[email]" placeholder="Your email address" required aria-label="Email">
+        <button type="submit" class="btn btn-light">Subscribe</button>
+      </div>
+    {%- endform -%}
+    <p class="newsletter-note">No spam, ever. Unsubscribe any time.</p>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "About",
+  "settings": [
+    { "type": "text",         "id": "title",           "label": "Page title",      "default": "Our Story" },
+    { "type": "text",         "id": "subtitle",        "label": "Page subtitle",   "default": "A little shop with a lot of heart" },
+    { "type": "image_picker", "id": "intro_image",     "label": "Intro image" },
+    { "type": "text",         "id": "intro_heading",   "label": "Intro heading",   "default": "Beautiful Little Finds for Cosy Homes" },
+    { "type": "textarea",     "id": "intro_text1",     "label": "Intro paragraph 1", "default": "The Cosy Cairn began with a simple belief: that the smallest details can make a house feel like home. What started as a passion for collecting beautiful, comforting objects has grown into a carefully curated shop filled with pieces we truly love." },
+    { "type": "textarea",     "id": "intro_text2",     "label": "Intro paragraph 2", "default": "Every item in our collection is chosen with intention. We look for quality craftsmanship, gentle materials, and that little spark of wonder that turns an ordinary moment into something special." },
+    { "type": "textarea",     "id": "intro_text3",     "label": "Intro paragraph 3", "default": "From hand-poured candles and woven baskets to vintage-inspired tableware and soft textiles, each piece is something we would happily welcome into our own homes." },
+    { "type": "text",         "id": "values_title",    "label": "Values title",    "default": "What We Stand For" },
+    { "type": "text",         "id": "values_subtitle", "label": "Values subtitle", "default": "The values that guide everything we do" },
+    { "type": "text",         "id": "val1_title",      "label": "Value 1 title",   "default": "Thoughtfully Chosen" },
+    { "type": "textarea",     "id": "val1_text",       "label": "Value 1 text",    "default": "Every product is hand-selected for its beauty, quality, and ability to bring comfort." },
+    { "type": "text",         "id": "val2_title",      "label": "Value 2 title",   "default": "Eco Conscious" },
+    { "type": "textarea",     "id": "val2_text",       "label": "Value 2 text",    "default": "We prioritise sustainable materials and plastic-free packaging wherever possible." },
+    { "type": "text",         "id": "val3_title",      "label": "Value 3 title",   "default": "Small Shop, Big Heart" },
+    { "type": "textarea",     "id": "val3_text",       "label": "Value 3 text",    "default": "When you shop with us, you support a small business and the passionate makers we work with." },
+    { "type": "text",         "id": "val4_title",      "label": "Value 4 title",   "default": "Carefully Packed" },
+    { "type": "textarea",     "id": "val4_text",       "label": "Value 4 text",    "default": "Each order is wrapped with love and sent in eco-friendly packaging to arrive safely." }
+  ],
+  "presets": [{ "name": "About" }]
+}
+{% endschema %}
