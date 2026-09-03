@@ -7,48 +7,45 @@
     </div>
 
     <div class="category-grid">
-      {%- for block in section.blocks -%}
-        {%- assign col = collections[block.settings.collection] -%}
-        {%- if col != blank -%}
-          <a href="{{ col.url }}" class="category-card fade-in" {{ block.shopify_attributes }}>
+      {%- if section.blocks.size > 0 -%}
+        {%- for block in section.blocks -%}
+          {%- assign col = collections[block.settings.collection] -%}
+          <a href="{{ col.url | default: '/collections/all' }}" class="category-card fade-in" {{ block.shopify_attributes }}>
             <div class="category-card-image">
-              {%- if col.image -%}
+              {%- if col != blank and col.image -%}
                 <img src="{{ col.image | image_url: width: 600 }}"
                      alt="{{ col.title | escape }}"
                      loading="lazy" width="600" height="700">
-              {%- elsif col.products.first.featured_image -%}
+              {%- elsif col != blank and col.products.first.featured_image -%}
                 <img src="{{ col.products.first.featured_image | image_url: width: 600 }}"
                      alt="{{ col.title | escape }}"
                      loading="lazy" width="600" height="700">
               {%- else -%}
-                <div class="category-card-placeholder">{{ col.title | slice: 0, 2 | upcase }}</div>
+                <div class="category-card-placeholder">
+                  {{ col.title | default: 'Shop' | slice: 0, 2 | upcase }}
+                </div>
               {%- endif -%}
             </div>
             <div class="category-card-overlay">
-              <h3 class="category-card-title">{{ col.title }}</h3>
-              {%- if col.description != blank -%}
-                <p class="category-card-desc">{{ col.description | strip_html | truncate: 60 }}</p>
-              {%- endif -%}
+              <h3 class="category-card-title">{{ col.title | default: block.settings.collection | replace: '-', ' ' | capitalize }}</h3>
               <span class="category-card-link">Shop Now</span>
             </div>
           </a>
-        {%- else -%}
-          <!-- block has no collection selected — skip -->
-        {%- endif -%}
+        {%- endfor -%}
       {%- else -%}
-        {%- comment -%}No blocks added — show placeholder cards{%- endcomment -%}
-        {%- for i in (1..5) -%}
-          <div class="category-card category-card--empty fade-in">
+        {%- assign placeholder_names = 'Home Decor,Candles,Kitchen & Dining,Textiles,Gifts' | split: ',' -%}
+        {%- for name in placeholder_names -%}
+          <div class="category-card fade-in">
             <div class="category-card-image">
-              <div class="category-card-placeholder">—</div>
+              <div class="category-card-placeholder">{{ name | slice: 0, 2 | upcase }}</div>
             </div>
             <div class="category-card-overlay">
-              <h3 class="category-card-title">Add a collection</h3>
-              <span class="category-card-link">Edit section</span>
+              <h3 class="category-card-title">{{ name }}</h3>
+              <span class="category-card-link">Shop Now</span>
             </div>
           </div>
         {%- endfor -%}
-      {%- endfor -%}
+      {%- endif -%}
     </div>
   </div>
 </section>
