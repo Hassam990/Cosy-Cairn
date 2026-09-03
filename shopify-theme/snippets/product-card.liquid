@@ -1,44 +1,45 @@
 {%- assign featured_image = product.featured_image -%}
-{%- assign first_variant  = product.first_available_variant | default: product.variants.first -%}
+{%- assign first_variant  = product.selected_or_first_available_variant | default: product.variants.first -%}
 
 <div class="product-card">
   <div class="product-card-image">
     {%- if featured_image -%}
       <a href="{{ product.url }}">
-        <img
-          src="{{ featured_image | image_url: width: 600 }}"
-          alt="{{ featured_image.alt | default: product.title | escape }}"
-          loading="lazy"
-          width="600"
-          height="700">
+        <img src="{{ featured_image | image_url: width: 600 }}"
+             alt="{{ featured_image.alt | default: product.title | escape }}"
+             loading="lazy" width="600" height="700">
       </a>
     {%- else -%}
-      <a href="{{ product.url }}" class="category-card-placeholder">
-        {{ product.title | slice: 0, 2 | upcase }}
+      <a href="{{ product.url }}" class="product-card-no-image"
+         style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:linear-gradient(160deg,#c9b8a8,#f8f5f0);">
+        <svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" fill="none" viewBox="0 0 24 24" stroke="rgba(92,92,82,0.3)" stroke-width="1">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+        </svg>
       </a>
     {%- endif -%}
 
+    {%- comment -%}Badge logic — uses tags for New/Best Seller, compare price for Sale{%- endcomment -%}
     {%- if product.compare_at_price > product.price -%}
       <span class="product-badge sale">Sale</span>
-    {%- elsif product.tags contains 'new' or product.tags contains 'new-in' -%}
-      <span class="product-badge new">New</span>
     {%- elsif product.tags contains 'best-seller' -%}
       <span class="product-badge">Best Seller</span>
+    {%- elsif product.tags contains 'new' or product.tags contains 'new-in' -%}
+      <span class="product-badge new">New</span>
     {%- endif -%}
 
     {%- if first_variant.available -%}
-      <button
-        class="product-card-quick"
-        data-quick-add
-        data-variant-id="{{ first_variant.id }}">
+      <button class="product-card-quick" data-quick-add data-variant-id="{{ first_variant.id }}">
         Add to Cart
       </button>
     {%- else -%}
-      <span class="product-card-quick" style="cursor:default;">Sold Out</span>
+      <span class="product-card-quick product-card-quick--soldout" style="cursor:default;opacity:0.7;">Sold Out</span>
     {%- endif -%}
   </div>
 
   <div class="product-card-info">
+    {%- if product.type != blank -%}
+      <p class="product-card-type">{{ product.type | upcase }}</p>
+    {%- endif -%}
     <a href="{{ product.url }}">
       <h3 class="product-card-title">{{ product.title }}</h3>
     </a>

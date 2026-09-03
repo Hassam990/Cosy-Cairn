@@ -1,8 +1,10 @@
 {%- liquid
-  assign fallback_titles  = 'Hand-Poured Lavender Candle,Vintage Floral Teacup Set,Woven Seagrass Basket,Linen Throw Pillow,Dried Flower Bouquet,Artisan Ceramic Vase,Chunky Knit Throw Blanket,Soy Wax Candle Trio' | split: ','
-  assign fallback_prices  = '£18.00,£32.00,£24.50,£28.00,£22.00,£36.00,£58.00,£42.00' | split: ','
-  assign fallback_badges  = 'Best Seller,,Sale,New,,New,,' | split: ','
-  assign fallback_colors  = '#b8c9a9,#d4c4b0,#c9b8a8,#c4bfb0,#d0c4b8,#b8bfc9,#ccc4b4,#b8c9a9' | split: ','
+  assign fp_titles  = 'Serenity Self-Care Kit,Zen Shower Steamers,Buddha Feng Shui Set,White Crescent Moon Oil Burner,Love Healing Crystal Set,Set of 2 Witch Scented Candles,Midnight Bloom Tulip Candle,Manifestation Crystal Set' | split: ','
+  assign fp_prices  = '£22.00,£8.00,£39.00,£10.99,£9.99,£12.99,£9.99,£16.99' | split: ','
+  assign fp_compare = ',,,,,,,,' | split: ','
+  assign fp_badges  = 'Best Seller,New,Best Seller,,New,New,New,' | split: ','
+  assign fp_types   = 'Wellbeing & Self-Care,Wellbeing,Home Décor,Candles,Crystals,Candles,Candles,Crystals' | split: ','
+  assign fp_colors  = '#c9b8a8,#b8c9a9,#b8bfc9,#c4bfb0,#c0786a,#3d3d35,#3d3d35,#b8c9a9' | split: ','
 -%}
 
 <section class="section section--warm">
@@ -16,39 +18,38 @@
     <div class="product-grid">
       {%- assign src = collections[section.settings.collection] -%}
       {%- assign product_list = src.products | default: collections.all.products -%}
-      {%- assign count = 0 -%}
+      {%- assign rendered = 0 -%}
 
       {%- for product in product_list limit: section.settings.products_count -%}
         {%- render 'product-card', product: product -%}
-        {%- assign count = count | plus: 1 -%}
+        {%- assign rendered = rendered | plus: 1 -%}
       {%- endfor -%}
 
-      {%- comment -%}Fill remaining slots with hardcoded placeholders{%- endcomment -%}
-      {%- assign remaining = section.settings.products_count | minus: count -%}
-      {%- if remaining > 0 -%}
-        {%- for i in (1..remaining) -%}
-          {%- assign idx   = count | plus: forloop.index0 -%}
-          {%- assign ptitle = fallback_titles[idx] | default: 'Cosy Home Piece' -%}
-          {%- assign pprice = fallback_prices[idx]  | default: '£24.00' -%}
-          {%- assign pbadge = fallback_badges[idx] -%}
-          {%- assign pcolor = fallback_colors[idx]  | default: '#e5ddd3' -%}
+      {%- assign needed = section.settings.products_count | minus: rendered -%}
+      {%- if needed > 0 -%}
+        {%- for i in (1..needed) -%}
+          {%- assign idx   = rendered | plus: forloop.index0 -%}
+          {%- assign pt    = fp_titles[idx]  | default: 'Cosy Home Piece' -%}
+          {%- assign pp    = fp_prices[idx]  | default: '£12.00' -%}
+          {%- assign pb    = fp_badges[idx] -%}
+          {%- assign ptype = fp_types[idx]   | default: 'Home Décor' -%}
+          {%- assign pclr  = fp_colors[idx]  | default: '#e5ddd3' -%}
           <div class="product-card">
             <div class="product-card-image">
-              <div class="product-card-placeholder" style="background: linear-gradient(160deg, {{ pcolor }}, #f8f5f0); position:absolute; inset:0; display:flex; align-items:center; justify-content:center;">
-                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="none" viewBox="0 0 24 24" stroke="rgba(92,92,82,0.3)" stroke-width="1">
+              <div style="position:absolute;inset:0;background:linear-gradient(160deg,{{ pclr }},#f8f5f0);display:flex;align-items:center;justify-content:center;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" fill="none" viewBox="0 0 24 24" stroke="rgba(255,255,255,0.35)" stroke-width="1">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                 </svg>
               </div>
-              {%- if pbadge != blank and pbadge != '' -%}
-                <span class="product-badge{% if pbadge == 'Sale' %} sale{% elsif pbadge == 'New' %} new{% endif %}">{{ pbadge }}</span>
+              {%- if pb != blank and pb != '' -%}
+                <span class="product-badge{% if pb == 'Sale' %} sale{% elsif pb == 'New' %} new{% endif %}">{{ pb }}</span>
               {%- endif -%}
-              <button class="product-card-quick" disabled>Add to Cart</button>
+              <div class="product-card-quick" style="cursor:default;background:rgba(253,251,247,0.9);">Add to Cart</div>
             </div>
             <div class="product-card-info">
-              <h3 class="product-card-title">{{ ptitle }}</h3>
-              <div class="product-card-price">
-                <span class="price">{{ pprice }}</span>
-              </div>
+              <p style="font-size:0.68rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--text-light);margin-bottom:6px;">{{ ptype }}</p>
+              <h3 class="product-card-title">{{ pt }}</h3>
+              <div class="product-card-price"><span class="price">{{ pp }}</span></div>
             </div>
           </div>
         {%- endfor -%}
@@ -56,7 +57,7 @@
     </div>
 
     <div class="section-cta">
-      <a href="{{ section.settings.cta_url | default: '/collections/all' }}" class="btn btn-outline">
+      <a href="{{ section.settings.cta_url | default: routes.all_products_collection_url }}" class="btn btn-outline">
         {{ section.settings.cta_label }}
       </a>
     </div>

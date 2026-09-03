@@ -6,7 +6,7 @@
         "eyebrow": "Welcome to",
         "heading_line1": "The Cosy",
         "heading_line2": "Cairn",
-        "tagline": "Beautiful little finds for homes\nfull of light and a little wonder",
+        "tagline": "Beautiful little finds for homes full of light and a little wonder",
         "cta1_label": "Shop Now",
         "cta1_url": "\/collections\/all",
         "cta2_label": "Explore Collections",
@@ -33,26 +33,11 @@
     "featured-categories": {
       "type": "featured-categories",
       "blocks": {
-        "cat1": {
-          "type": "category",
-          "settings": { "collection": "home-decor" }
-        },
-        "cat2": {
-          "type": "category",
-          "settings": { "collection": "candles" }
-        },
-        "cat3": {
-          "type": "category",
-          "settings": { "collection": "kitchen-dining" }
-        },
-        "cat4": {
-          "type": "category",
-          "settings": { "collection": "textiles" }
-        },
-        "cat5": {
-          "type": "category",
-          "settings": { "collection": "gifts" }
-        }
+        "cat1": { "type": "category", "settings": { "collection": "candles-home-fragrance" } },
+        "cat2": { "type": "category", "settings": { "collection": "wellbeing-self-care" } },
+        "cat3": { "type": "category", "settings": { "collection": "home-decor-accessories" } },
+        "cat4": { "type": "category", "settings": { "collection": "crystals-spiritual-gifts" } },
+        "cat5": { "type": "category", "settings": { "collection": "gifts-gift-sets" } }
       },
       "block_order": ["cat1","cat2","cat3","cat4","cat5"],
       "settings": {
@@ -73,11 +58,11 @@
     "featured-banner": {
       "type": "featured-banner",
       "settings": {
-        "label": "New Season",
-        "heading_line1": "New Season,",
-        "heading_line2": "New Cosy",
-        "text": "Discover our latest arrivals designed to bring softness, warmth, and a little everyday magic into your home.",
-        "cta_label": "Explore New In",
+        "label": "New Arrivals",
+        "heading_line1": "Beautiful New",
+        "heading_line2": "Arrivals",
+        "text": "From healing crystals and hand-poured candles to spiritual gifts and cosy home accessories — our latest arrivals are thoughtfully chosen for homes full of light and wonder.",
+        "cta_label": "Shop New In",
         "cta_url": "\/collections\/new-in"
       }
     },
