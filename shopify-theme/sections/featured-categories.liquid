@@ -1,11 +1,3 @@
-{%- liquid
-  assign fallback_titles   = 'Candles & Home Fragrance,Wellbeing & Self-Care,Home Décor & Accessories,Crystals & Spiritual Gifts,Gifts & Gift Sets' | split: ','
-  assign fallback_handles  = 'candles-home-fragrance,wellbeing-self-care,home-decor-accessories,crystals-spiritual-gifts,gifts-gift-sets' | split: ','
-  assign fallback_initials = 'CA,WB,HD,CR,GF' | split: ','
-  assign fallback_colors   = '#b8c9a9,#c9b8a8,#d4c4b0,#b8bfc9,#ccc4b4' | split: ','
-  assign fallback_descs    = 'Oil burners candles and home fragrance,Self-care bath and wellness gifts,Beautiful pieces for every room,Healing crystals and spiritual gifts,Thoughtful gifts for every occasion' | split: ','
--%}
-
 <section class="section">
   <div class="container">
     <div class="section-header">
@@ -18,48 +10,56 @@
       {%- if section.blocks.size > 0 -%}
         {%- for block in section.blocks -%}
           {%- assign col = collections[block.settings.collection] -%}
-          {%- assign idx = forloop.index0 -%}
-          {%- assign fb_title   = fallback_titles[idx]   | default: 'Shop' -%}
-          {%- assign fb_handle  = fallback_handles[idx]  | default: 'all' -%}
-          {%- assign fb_initial = fallback_initials[idx] | default: '—' -%}
-          {%- assign fb_color   = fallback_colors[idx]   | default: '#e5ddd3' -%}
-          <a href="{{ col.url | default: '/collections/' | append: fb_handle }}" class="category-card" {{ block.shopify_attributes }}>
-            <div class="category-card-image">
-              {%- if col != blank and col.image -%}
-                <img src="{{ col.image | image_url: width: 600 }}" alt="{{ col.title | escape }}" loading="lazy" width="600" height="700">
-              {%- elsif col != blank and col.products.first.featured_image -%}
-                <img src="{{ col.products.first.featured_image | image_url: width: 600 }}" alt="{{ col.title | escape }}" loading="lazy" width="600" height="700">
-              {%- else -%}
-                <div class="category-card-placeholder" style="background:linear-gradient(160deg,{{ fb_color }},#f8f5f0);">
-                  <span>{{ col.title | default: fb_initial | slice: 0, 2 | upcase }}</span>
-                </div>
-              {%- endif -%}
-            </div>
-            <div class="category-card-overlay">
-              <h3 class="category-card-title">{{ col.title | default: fb_title }}</h3>
-              {%- if col != blank and col.description != blank -%}
-                <p class="category-card-desc">{{ col.description | strip_html | truncate: 55 }}</p>
-              {%- else -%}
-                <p class="category-card-desc">{{ fallback_descs[idx] }}</p>
-              {%- endif -%}
-              <span class="category-card-link">Shop Now</span>
-            </div>
-          </a>
+          {%- if col != blank -%}
+            <a href="{{ col.url }}" class="category-card" {{ block.shopify_attributes }}>
+              <div class="category-card-image">
+                {%- if col.image -%}
+                  <img src="{{ col.image | image_url: width: 600 }}" alt="{{ col.title | escape }}" loading="lazy" width="600" height="700">
+                {%- elsif col.products.first.featured_image -%}
+                  <img src="{{ col.products.first.featured_image | image_url: width: 600 }}" alt="{{ col.title | escape }}" loading="lazy" width="600" height="700">
+                {%- else -%}
+                  <div class="category-card-placeholder">{{ col.title | slice: 0, 2 | upcase }}</div>
+                {%- endif -%}
+              </div>
+              <div class="category-card-overlay">
+                <h3 class="category-card-title">{{ col.title }}</h3>
+                {%- if col.description != blank -%}
+                  <p class="category-card-desc">{{ col.description | strip_html | truncate: 55 }}</p>
+                {%- endif -%}
+                <span class="category-card-link">Shop Now</span>
+              </div>
+            </a>
+          {%- else -%}
+            {%- comment -%}Block exists but no collection assigned — show prompt in editor only{%- endcomment -%}
+          {%- endif -%}
         {%- endfor -%}
       {%- else -%}
-        {%- for i in (0..4) -%}
-          <a href="/collections/{{ fallback_handles[i] }}" class="category-card">
-            <div class="category-card-image">
-              <div class="category-card-placeholder" style="background:linear-gradient(160deg,{{ fallback_colors[i] }},#f8f5f0);">
-                <span>{{ fallback_initials[i] }}</span>
-              </div>
-            </div>
-            <div class="category-card-overlay">
-              <h3 class="category-card-title">{{ fallback_titles[i] }}</h3>
-              <p class="category-card-desc">{{ fallback_descs[i] }}</p>
-              <span class="category-card-link">Shop Now</span>
-            </div>
-          </a>
+        {%- comment -%}No blocks — auto-show first 5 real collections from the store{%- endcomment -%}
+        {%- assign shown = 0 -%}
+        {%- for col in collections -%}
+          {%- unless col.handle == 'frontpage' or col.handle == 'all' -%}
+            {%- if shown < 5 -%}
+              <a href="{{ col.url }}" class="category-card">
+                <div class="category-card-image">
+                  {%- if col.image -%}
+                    <img src="{{ col.image | image_url: width: 600 }}" alt="{{ col.title | escape }}" loading="lazy">
+                  {%- elsif col.products.first.featured_image -%}
+                    <img src="{{ col.products.first.featured_image | image_url: width: 600 }}" alt="{{ col.title | escape }}" loading="lazy">
+                  {%- else -%}
+                    <div class="category-card-placeholder">{{ col.title | slice: 0, 2 | upcase }}</div>
+                  {%- endif -%}
+                </div>
+                <div class="category-card-overlay">
+                  <h3 class="category-card-title">{{ col.title }}</h3>
+                  {%- if col.description != blank -%}
+                    <p class="category-card-desc">{{ col.description | strip_html | truncate: 55 }}</p>
+                  {%- endif -%}
+                  <span class="category-card-link">Shop Now</span>
+                </div>
+              </a>
+              {%- assign shown = shown | plus: 1 -%}
+            {%- endif -%}
+          {%- endunless -%}
         {%- endfor -%}
       {%- endif -%}
     </div>

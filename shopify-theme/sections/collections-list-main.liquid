@@ -1,12 +1,3 @@
-{%- liquid
-  assign fallback_titles = 'Home Decor,Candles,Kitchen & Dining,Textiles,Gifts' | split: ','
-  assign fallback_handles = 'home-decor,candles,kitchen-dining,textiles,gifts' | split: ','
-  assign fallback_descs = 'Beautiful pieces to make your house feel like home.,Hand-poured scents to fill your home with warmth.,Charming tableware for slow mornings and cosy suppers.,Soft throws cushions and linens in gentle tones.,Thoughtful finds for the ones you love.' | split: ','
-  assign fallback_initials = 'HD,CA,KD,TX,GF' | split: ','
-  assign fallback_colors = '#d4c4b0,#b8c9a9,#c9b8a8,#c4bfb0,#ccc4b4' | split: ','
--%}
-
-<!-- Page Header -->
 <section class="page-header">
   <div class="container">
     <h1>{{ section.settings.title }}</h1>
@@ -14,60 +5,52 @@
   </div>
 </section>
 
-<!-- Collections Grid -->
 <section class="section" style="padding-top:48px;">
   <div class="container">
-    <div class="category-grid">
-      {%- assign col_count = 0 -%}
-      {%- for col in collections -%}
-        {%- unless col.handle == 'frontpage' or col.handle == 'all' -%}
-          <a href="{{ col.url }}" class="category-card">
-            <div class="category-card-image">
-              {%- if col.image -%}
-                <img src="{{ col.image | image_url: width: 600 }}" alt="{{ col.title | escape }}" loading="lazy">
-              {%- elsif col.products.first.featured_image -%}
-                <img src="{{ col.products.first.featured_image | image_url: width: 600 }}" alt="{{ col.title | escape }}" loading="lazy">
-              {%- else -%}
-                {%- assign fi = forloop.index0 -%}
-                <div class="category-card-placeholder" style="background:linear-gradient(160deg,{{ fallback_colors[fi] }},#f8f5f0);">
-                  <span>{{ col.title | slice: 0, 2 | upcase }}</span>
-                </div>
-              {%- endif -%}
-            </div>
-            <div class="category-card-overlay">
-              <h3 class="category-card-title">{{ col.title }}</h3>
-              {%- if col.description != blank -%}
-                <p class="category-card-desc">{{ col.description | strip_html | truncate: 55 }}</p>
-              {%- endif -%}
-              <span class="category-card-link">Shop Now</span>
-            </div>
-          </a>
-          {%- assign col_count = col_count | plus: 1 -%}
-        {%- endunless -%}
-      {%- endfor -%}
+    {%- assign col_count = 0 -%}
+    {%- for col in collections -%}
+      {%- unless col.handle == 'frontpage' or col.handle == 'all' -%}
+        {%- assign col_count = col_count | plus: 1 -%}
+      {%- endunless -%}
+    {%- endfor -%}
 
-      {%- comment -%}Fallback if no collections{%- endcomment -%}
-      {%- if col_count == 0 -%}
-        {%- for i in (0..4) -%}
-          <a href="/collections/{{ fallback_handles[i] }}" class="category-card">
-            <div class="category-card-image">
-              <div class="category-card-placeholder" style="background:linear-gradient(160deg,{{ fallback_colors[i] }},#f8f5f0);">
-                <span>{{ fallback_initials[i] }}</span>
+    {%- if col_count > 0 -%}
+      <div class="category-grid">
+        {%- for col in collections -%}
+          {%- unless col.handle == 'frontpage' or col.handle == 'all' -%}
+            <a href="{{ col.url }}" class="category-card">
+              <div class="category-card-image">
+                {%- if col.image -%}
+                  <img src="{{ col.image | image_url: width: 600 }}" alt="{{ col.title | escape }}" loading="lazy">
+                {%- elsif col.products.first.featured_image -%}
+                  <img src="{{ col.products.first.featured_image | image_url: width: 600 }}" alt="{{ col.title | escape }}" loading="lazy">
+                {%- else -%}
+                  <div class="category-card-placeholder">{{ col.title | slice: 0, 2 | upcase }}</div>
+                {%- endif -%}
               </div>
-            </div>
-            <div class="category-card-overlay">
-              <h3 class="category-card-title">{{ fallback_titles[i] }}</h3>
-              <p class="category-card-desc">{{ fallback_descs[i] }}</p>
-              <span class="category-card-link">Shop Now</span>
-            </div>
-          </a>
+              <div class="category-card-overlay">
+                <h3 class="category-card-title">{{ col.title }}</h3>
+                {%- if col.description != blank -%}
+                  <p class="category-card-desc">{{ col.description | strip_html | truncate: 55 }}</p>
+                {%- endif -%}
+                <span class="category-card-link">Shop Now</span>
+              </div>
+            </a>
+          {%- endunless -%}
         {%- endfor -%}
-      {%- endif -%}
-    </div>
+      </div>
+    {%- else -%}
+      <div class="empty-state">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1"><path stroke-linecap="round" stroke-linejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+        <h3>No collections yet</h3>
+        <p>Create collections in your Shopify admin and assign your imported products to them.</p>
+        <a href="{{ routes.all_products_collection_url }}" class="btn btn-primary">Browse All Products</a>
+      </div>
+    {%- endif -%}
   </div>
 </section>
 
-<!-- Featured from collections -->
+{%- if col_count > 0 -%}
 <section class="section section--warm">
   <div class="container">
     <div class="section-header">
@@ -75,37 +58,19 @@
       <p class="section-subtitle">{{ section.settings.featured_subtitle }}</p>
       <div class="section-divider"></div>
     </div>
-    <div class="product-grid">
-      {%- assign feat_count = 0 -%}
-      {%- for product in collections.all.products limit: 8 -%}
-        {%- render 'product-card', product: product -%}
-        {%- assign feat_count = feat_count | plus: 1 -%}
-      {%- endfor -%}
-      {%- if feat_count == 0 -%}
-        {%- assign fp_titles = 'Hand-Poured Lavender Candle,Artisan Ceramic Vase,Chunky Knit Throw,Woven Seagrass Basket' | split: ',' -%}
-        {%- assign fp_prices = '£18.00,£36.00,£58.00,£24.50' | split: ',' -%}
-        {%- assign fp_colors = '#b8c9a9,#b8bfc9,#ccc4b4,#c9b8a8' | split: ',' -%}
-        {%- for j in (0..3) -%}
-          <div class="product-card">
-            <div class="product-card-image">
-              <div style="position:absolute;inset:0;background:linear-gradient(160deg,{{ fp_colors[j] }},#f8f5f0);display:flex;align-items:center;justify-content:center;">
-                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="none" viewBox="0 0 24 24" stroke="rgba(92,92,82,0.25)" stroke-width="1"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-              </div>
-              <button class="product-card-quick" disabled>Add to Cart</button>
-            </div>
-            <div class="product-card-info">
-              <h3 class="product-card-title">{{ fp_titles[j] }}</h3>
-              <div class="product-card-price"><span class="price">{{ fp_prices[j] }}</span></div>
-            </div>
-          </div>
+    {%- if collections.all.products.size > 0 -%}
+      <div class="product-grid">
+        {%- for product in collections.all.products limit: 8 -%}
+          {%- render 'product-card', product: product -%}
         {%- endfor -%}
-      {%- endif -%}
-    </div>
-    <div class="section-cta">
-      <a href="{{ routes.all_products_collection_url }}" class="btn btn-outline">View All Products</a>
-    </div>
+      </div>
+      <div class="section-cta">
+        <a href="{{ routes.all_products_collection_url }}" class="btn btn-outline">View All Products</a>
+      </div>
+    {%- endif -%}
   </div>
 </section>
+{%- endif -%}
 
 {% schema %}
 {
@@ -113,7 +78,7 @@
   "settings": [
     { "type": "text", "id": "title",            "label": "Page title",         "default": "Collections" },
     { "type": "text", "id": "subtitle",         "label": "Page subtitle",      "default": "Browse our curated collections, each chosen to bring warmth to your home" },
-    { "type": "text", "id": "featured_title",   "label": "Featured title",     "default": "From This Collection" },
+    { "type": "text", "id": "featured_title",   "label": "Featured title",     "default": "From Our Collections" },
     { "type": "text", "id": "featured_subtitle","label": "Featured subtitle",  "default": "Browse highlights from across our collections" }
   ],
   "presets": [{ "name": "Collections List" }]

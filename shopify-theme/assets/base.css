@@ -1148,3 +1148,32 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 
 /* ===== Collections List — match real category grid ===== */
 .category-grid { grid-template-columns: repeat(5,1fr); }
+
+/* ===== Empty State ===== */
+.empty-state {
+  text-align: center;
+  padding: 96px 24px;
+  max-width: 480px;
+  margin: 0 auto;
+}
+.empty-state svg {
+  width: 56px;
+  height: 56px;
+  stroke: var(--beige);
+  margin: 0 auto 24px;
+  display: block;
+}
+.empty-state h3 {
+  font-family: 'Playfair Display', 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 12px;
+}
+.empty-state p {
+  font-size: 1rem;
+  color: var(--text-light);
+  font-style: italic;
+  line-height: 1.7;
+  margin-bottom: 28px;
+}
