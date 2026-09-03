@@ -2,33 +2,80 @@
   "sections": {
     "hero": {
       "type": "hero",
-      "disabled": false,
-      "settings": {}
+      "settings": {
+        "eyebrow": "Welcome to",
+        "heading_line1": "The Cosy",
+        "heading_line2": "Cairn",
+        "tagline": "Beautiful little finds for homes full of light and a little wonder",
+        "cta1_label": "Shop Now",
+        "cta1_url": "/collections/all",
+        "cta2_label": "Explore Collections",
+        "cta2_url": "/collections"
+      }
     },
     "trust-badges": {
       "type": "trust-badges",
-      "disabled": false,
-      "settings": {}
+      "settings": {
+        "badge_1_icon": "plus",
+        "badge_1_title": "Thoughtful Pieces",
+        "badge_1_text": "Lovingly chosen for your home and heart",
+        "badge_2_icon": "heart",
+        "badge_2_title": "Small Shop",
+        "badge_2_text": "Thank you for supporting my dream",
+        "badge_3_icon": "leaf",
+        "badge_3_title": "Eco Friendly",
+        "badge_3_text": "Sustainable packaging wherever possible",
+        "badge_4_icon": "shield",
+        "badge_4_title": "Secure Checkout",
+        "badge_4_text": "Safe & secure payments you can trust"
+      }
     },
     "featured-categories": {
       "type": "featured-categories",
-      "disabled": false,
-      "settings": {}
+      "settings": {
+        "title": "Shop by Category",
+        "subtitle": "Curated collections for every cosy corner"
+      },
+      "blocks": {
+        "cat1": { "type": "category", "settings": { "collection": "home-decor" } },
+        "cat2": { "type": "category", "settings": { "collection": "candles" } },
+        "cat3": { "type": "category", "settings": { "collection": "kitchen-dining" } },
+        "cat4": { "type": "category", "settings": { "collection": "textiles" } },
+        "cat5": { "type": "category", "settings": { "collection": "gifts" } }
+      },
+      "block_order": ["cat1", "cat2", "cat3", "cat4", "cat5"]
     },
     "featured-products": {
       "type": "featured-products",
-      "disabled": false,
-      "settings": {}
+      "settings": {
+        "title": "Shop Our Favourites",
+        "subtitle": "Hand-picked pieces we think you'll love",
+        "products_count": 8,
+        "cta_label": "View All Products",
+        "cta_url": "/collections/all"
+      }
     },
     "featured-banner": {
       "type": "featured-banner",
-      "disabled": false,
-      "settings": {}
+      "settings": {
+        "label": "New Season",
+        "heading_line1": "New Season,",
+        "heading_line2": "New Cosy",
+        "text": "Discover our latest arrivals designed to bring softness, warmth, and a little everyday magic into your home. From hand-poured candles to woven textures, each piece is chosen with care.",
+        "cta_label": "Explore New In",
+        "cta_url": "/collections/new-in"
+      }
     },
     "newsletter": {
       "type": "newsletter",
-      "disabled": false,
-      "settings": {}
+      "settings": {
+        "title": "Join Our Cosy Corner",
+        "subtitle": "Be the first to know about new arrivals, exclusive offers, and little moments of wonder.",
+        "placeholder": "Your email address",
+        "button_label": "Subscribe",
+        "note": "No spam, ever. Unsubscribe any time.",
+        "success_message": "Thank you for subscribing!"
+      }
     }
   },
   "order": [

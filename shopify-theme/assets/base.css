@@ -252,7 +252,9 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   z-index: -2; transform: scale(1.04);
   transition: transform 8s ease-out;
 }
-.hero-bg--placeholder { background-color: var(--beige); }
+.hero-bg--placeholder {
+  background: linear-gradient(135deg, #3d3d35 0%, #5c5c52 40%, #7a8f6a 100%);
+}
 .hero:hover .hero-bg { transform: scale(1); }
 .hero-overlay {
   position: absolute; inset: 0;

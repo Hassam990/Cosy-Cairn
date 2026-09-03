@@ -4,8 +4,16 @@
   "sections": {
     "footer": {
       "type": "footer",
-      "disabled": false,
-      "settings": {}
+      "settings": {
+        "brand_text": "Beautiful little finds for homes full of light and a little wonder. Thoughtfully chosen, lovingly packed, and sent with care.",
+        "footer_note": "Designed with love for cosy homes.",
+        "col_1_title": "Shop",
+        "col_1_menu": "footer-shop",
+        "col_2_title": "Help",
+        "col_2_menu": "footer-help",
+        "col_3_title": "About",
+        "col_3_menu": "footer-about"
+      }
     }
   },
   "order": ["footer"]

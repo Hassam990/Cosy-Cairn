@@ -4,13 +4,23 @@
   "sections": {
     "announcement-bar": {
       "type": "announcement-bar",
-      "disabled": false,
-      "settings": {}
+      "settings": {
+        "item_1_icon": "plus",
+        "item_1_text": "Thoughtfully chosen for your home",
+        "item_2_icon": "shield",
+        "item_2_text": "Secure checkout & payments",
+        "item_3_icon": "heart",
+        "item_3_text": "Small shop, big heart",
+        "item_4_icon": "leaf",
+        "item_4_text": "Eco friendly packaging"
+      }
     },
     "header": {
       "type": "header",
-      "disabled": false,
-      "settings": {}
+      "settings": {
+        "tagline": "For homes full of light & wonder",
+        "menu": "main-menu"
+      }
     }
   },
   "order": ["announcement-bar", "header"]
