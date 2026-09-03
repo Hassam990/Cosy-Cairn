@@ -1,16 +1,37 @@
+<div class="announcement-bar">
+  <div class="container">
+    <div class="announcement-item">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/></svg>
+      <span>{{ section.settings.announcement_1 }}</span>
+    </div>
+    <div class="announcement-item">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+      <span>{{ section.settings.announcement_2 }}</span>
+    </div>
+    <div class="announcement-item">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+      <span>{{ section.settings.announcement_3 }}</span>
+    </div>
+    <div class="announcement-item">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+      <span>{{ section.settings.announcement_4 }}</span>
+    </div>
+  </div>
+</div>
+
 <header class="site-header">
   <div class="container">
     <div class="header-inner">
 
       <!-- Logo -->
       <a href="{{ routes.root_url }}" class="logo">
-        {%- if section.settings.logo -%}
+        {%- if section.settings.logo != blank -%}
           <img class="logo-img"
                src="{{ section.settings.logo | image_url: width: 120 }}"
                alt="{{ shop.name }}"
                width="60" height="60">
         {%- else -%}
-          <div class="logo-img logo-placeholder">CC</div>
+          <div class="logo-img logo-placeholder">{{ shop.name | slice: 0, 2 | upcase }}</div>
         {%- endif -%}
         <div class="logo-text">
           <span class="brand">{{ shop.name }}</span>
@@ -30,45 +51,59 @@
         </div>
 
         <ul>
-          {%- for link in linklists[section.settings.menu].links -%}
-            <li class="{% if link.child_links.size > 0 %}nav-dropdown{% endif %}">
-              <a href="{{ link.url }}" {% if link.active %}class="active"{% endif %}>
-                {{ link.title }}
-              </a>
-              {%- if link.child_links.size > 0 -%}
-                <ul class="dropdown-menu">
-                  {%- for child in link.child_links -%}
-                    <li><a href="{{ child.url }}">{{ child.title }}</a></li>
-                  {%- endfor -%}
-                </ul>
-              {%- endif -%}
+          {%- assign nav_links = linklists[section.settings.menu].links -%}
+          {%- if nav_links.size > 0 -%}
+            {%- for link in nav_links -%}
+              <li class="{% if link.child_links.size > 0 %}nav-dropdown{% endif %}">
+                <a href="{{ link.url }}" {% if link.active %}class="active"{% endif %}>{{ link.title }}</a>
+                {%- if link.child_links.size > 0 -%}
+                  <ul class="dropdown-menu">
+                    {%- for child in link.child_links -%}
+                      <li><a href="{{ child.url }}">{{ child.title }}</a></li>
+                    {%- endfor -%}
+                  </ul>
+                {%- endif -%}
+              </li>
+            {%- endfor -%}
+          {%- else -%}
+            <li><a href="{{ routes.root_url }}" {% if template.name == 'index' %}class="active"{% endif %}>Home</a></li>
+            <li class="nav-dropdown">
+              <a href="{{ routes.all_products_collection_url }}">Shop</a>
+              <ul class="dropdown-menu">
+                <li><a href="/collections/candles-home-fragrance">Candles &amp; Home Fragrance</a></li>
+                <li><a href="/collections/wellbeing-self-care">Wellbeing &amp; Self-Care</a></li>
+                <li><a href="/collections/home-decor-accessories">Home Décor &amp; Accessories</a></li>
+                <li><a href="/collections/crystals-spiritual-gifts">Crystals &amp; Spiritual Gifts</a></li>
+                <li><a href="/collections/gifts-gift-sets">Gifts &amp; Gift Sets</a></li>
+                <li><a href="/collections/garden-outdoor-decor">Garden &amp; Outdoor Décor</a></li>
+                <li><a href="/collections/mugs-drinkware">Mugs &amp; Drinkware</a></li>
+                <li><a href="/collections/jewellery">Jewellery</a></li>
+              </ul>
             </li>
-          {%- endfor -%}
+            <li><a href="/collections/new-in">New In</a></li>
+            <li><a href="/collections">Collections</a></li>
+            <li><a href="/pages/about">About</a></li>
+            <li><a href="/pages/contact">Contact</a></li>
+          {%- endif -%}
         </ul>
 
         <div class="nav-drawer-footer">
           <p class="nav-drawer-tagline">{{ section.settings.tagline }}</p>
           <div class="nav-drawer-social">
-            {%- if settings.social_instagram != blank -%}
-              <a href="{{ settings.social_instagram }}" aria-label="Instagram" target="_blank" rel="noopener">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
-              </a>
-            {%- endif -%}
-            {%- if settings.social_pinterest != blank -%}
-              <a href="{{ settings.social_pinterest }}" aria-label="Pinterest" target="_blank" rel="noopener">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M8 12c0-2.76 1.79-5 4-5s4 2.24 4 5c0 2.76-1.79 5-4 5"/></svg>
-              </a>
-            {%- endif -%}
-            {%- if settings.social_facebook != blank -%}
-              <a href="{{ settings.social_facebook }}" aria-label="Facebook" target="_blank" rel="noopener">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
-              </a>
-            {%- endif -%}
+            <a href="{{ settings.social_instagram | default: '#' }}" aria-label="Instagram">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+            </a>
+            <a href="{{ settings.social_pinterest | default: '#' }}" aria-label="Pinterest">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M8 12c0-2.76 1.79-5 4-5s4 2.24 4 5c0 2.76-1.79 5-4 5"/></svg>
+            </a>
+            <a href="{{ settings.social_facebook | default: '#' }}" aria-label="Facebook">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+            </a>
           </div>
         </div>
       </nav>
 
-      <!-- Icons -->
+      <!-- Header Icons -->
       <div class="header-icons">
         <a href="{{ routes.search_url }}" class="icon-btn" aria-label="Search">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
@@ -76,9 +111,9 @@
         <a href="{{ routes.account_url }}" class="icon-btn" aria-label="Account">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
         </a>
-        <button class="icon-btn cart-toggle-btn" id="cart-open-btn" aria-label="Cart">
+        <button class="icon-btn" id="cart-open-btn" aria-label="Cart">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
-          <span class="cart-count" id="cart-count">{{ cart.item_count }}</span>
+          <span class="cart-count" id="cart-count" {% if cart.item_count == 0 %}style="display:none"{% endif %}>{{ cart.item_count }}</span>
         </button>
         <button class="mobile-menu-toggle" id="mobile-menu-toggle"
                 aria-label="Open menu" aria-expanded="false" aria-controls="main-nav">
@@ -94,16 +129,76 @@
   </div>
 </header>
 
-<!-- Mobile overlay -->
 <div class="mobile-menu-overlay" id="mobile-menu-overlay"></div>
 
 {% schema %}
 {
   "name": "Header",
   "settings": [
-    { "type": "image_picker", "id": "logo",    "label": "Logo image" },
-    { "type": "text",         "id": "tagline", "label": "Tagline", "default": "For homes full of light & wonder" },
-    { "type": "link_list",    "id": "menu",    "label": "Navigation menu", "default": "main-menu" }
+    {
+      "type": "header",
+      "content": "Logo"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo image",
+      "info": "Recommended: 200x200px PNG with transparent background"
+    },
+    {
+      "type": "range",
+      "id": "logo_width",
+      "label": "Logo width (px)",
+      "min": 40,
+      "max": 120,
+      "step": 4,
+      "default": 60
+    },
+    {
+      "type": "text",
+      "id": "tagline",
+      "label": "Tagline below store name",
+      "default": "For homes full of light & wonder"
+    },
+    {
+      "type": "header",
+      "content": "Navigation"
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Main navigation menu",
+      "default": "main-menu",
+      "info": "Create a menu called 'main-menu' in Online Store > Navigation"
+    },
+    {
+      "type": "header",
+      "content": "Announcement Bar"
+    },
+    {
+      "type": "text",
+      "id": "announcement_1",
+      "label": "Message 1",
+      "default": "Thoughtfully chosen for your home"
+    },
+    {
+      "type": "text",
+      "id": "announcement_2",
+      "label": "Message 2",
+      "default": "Secure checkout & payments"
+    },
+    {
+      "type": "text",
+      "id": "announcement_3",
+      "label": "Message 3",
+      "default": "Small shop, big heart"
+    },
+    {
+      "type": "text",
+      "id": "announcement_4",
+      "label": "Message 4",
+      "default": "Eco friendly packaging"
+    }
   ]
 }
 {% endschema %}

@@ -38,14 +38,13 @@
 
 <body class="template-{{ template.name }}">
 
-  {%- render 'announcement-bar' -%}
-  {%- render 'header-nav' -%}
+  {%- section 'header' -%}
 
   <main id="main-content" tabindex="-1">
     {{ content_for_layout }}
   </main>
 
-  {%- render 'footer-section' -%}
+  {%- section 'footer' -%}
 
   <!-- Cart Drawer -->
   <div class="cart-overlay" id="cart-overlay"></div>
