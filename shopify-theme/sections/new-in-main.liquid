@@ -112,7 +112,8 @@
     {%- form 'customer', id: 'new-in-newsletter' -%}
       <input type="hidden" name="contact[tags]" value="newsletter">
       <div class="newsletter-form">
-        <input type="email" name="contact[email]" placeholder="{{ section.settings.nl_placeholder }}" required aria-label="Email">
+        <input type="email" name="contact[email]" placeholder="{{ section.settings.nl_placeholder }}" required aria-label="Email"
+               style="color:#3d3d35 !important;-webkit-text-fill-color:#3d3d35 !important;background:transparent;border:none;outline:none;flex:1;padding:12px 8px;font-family:inherit;font-size:1rem;">
         <button type="submit" class="btn btn-light">{{ section.settings.nl_btn }}</button>
       </div>
     {%- endform -%}

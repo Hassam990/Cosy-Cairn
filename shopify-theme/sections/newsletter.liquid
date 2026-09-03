@@ -1,3 +1,52 @@
+<style>
+  .newsletter-form {
+    background: rgba(255,255,255,0.95) !important;
+    border-radius: 40px;
+    display: flex;
+    max-width: 520px;
+    margin: 0 auto;
+    padding: 6px 6px 6px 24px;
+    border: none;
+  }
+  .newsletter-form input[type="email"] {
+    color: #3d3d35 !important;
+    background: transparent !important;
+    border: none !important;
+    outline: none !important;
+    flex: 1;
+    padding: 12px 8px;
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 1rem;
+    -webkit-text-fill-color: #3d3d35 !important;
+  }
+  .newsletter-form input[type="email"]::placeholder {
+    color: #8a8a80 !important;
+    -webkit-text-fill-color: #8a8a80 !important;
+    opacity: 1;
+  }
+  .newsletter-form input[type="email"]:focus {
+    color: #3d3d35 !important;
+    -webkit-text-fill-color: #3d3d35 !important;
+    background: transparent !important;
+  }
+  .newsletter-form .btn-light {
+    background: #9caf88 !important;
+    color: #ffffff !important;
+    border: none;
+    padding: 12px 28px;
+    font-size: 0.82rem;
+    letter-spacing: 1.5px;
+    border-radius: 30px;
+    flex-shrink: 0;
+    font-weight: 600;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+  .newsletter-form .btn-light:hover {
+    background: #7a8f6a !important;
+  }
+</style>
+
 <section class="newsletter">
   <div class="container">
     <div class="fade-in">
@@ -17,7 +66,8 @@
                  placeholder="{{ section.settings.placeholder }}"
                  required
                  aria-label="{{ section.settings.placeholder }}"
-                 autocomplete="email">
+                 autocomplete="email"
+                 style="color:#3d3d35 !important;background:transparent;border:none;outline:none;flex:1;padding:12px 8px;font-family:inherit;font-size:1rem;">
           <button type="submit" class="btn btn-light">
             {{ section.settings.button_label }}
           </button>
