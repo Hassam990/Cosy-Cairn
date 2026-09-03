@@ -1,6 +1,23 @@
 {
   "sections": {
-    "main": { "type": "new-in-main", "disabled": false, "settings": {} }
+    "main": {
+      "type": "new-in-main",
+      "settings": {
+        "title": "New In",
+        "subtitle": "Fresh arrivals to make your home feel even more special",
+        "grid_title": "Just Landed",
+        "grid_subtitle": "The newest pieces added to our cosy collection",
+        "banner_label": "New Season",
+        "banner_heading": "New Season,",
+        "banner_heading2": "New Cosy",
+        "banner_text": "From hand-poured candles to woven textures, each new piece is chosen with care to bring a little more magic to your home.",
+        "banner_cta": "Shop All New In",
+        "nl_title": "Never Miss a New Arrival",
+        "nl_text": "Subscribe to be the first to see our latest cosy finds.",
+        "nl_placeholder": "Your email address",
+        "nl_btn": "Subscribe"
+      }
+    }
   },
   "order": ["main"]
 }

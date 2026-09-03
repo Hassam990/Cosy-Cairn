@@ -1,6 +1,14 @@
 {
   "sections": {
-    "main": { "type": "collections-list-main", "disabled": false, "settings": {} }
+    "main": {
+      "type": "collections-list-main",
+      "settings": {
+        "title": "Collections",
+        "subtitle": "Browse our curated collections, each chosen to bring warmth to your home",
+        "featured_title": "From This Collection",
+        "featured_subtitle": "Browse highlights from across our collections"
+      }
+    }
   },
   "order": ["main"]
 }

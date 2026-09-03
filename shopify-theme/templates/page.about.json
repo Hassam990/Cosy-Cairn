@@ -1,6 +1,26 @@
 {
   "sections": {
-    "main": { "type": "about-main", "disabled": false, "settings": {} }
+    "main": {
+      "type": "about-main",
+      "settings": {
+        "title": "Our Story",
+        "subtitle": "A little shop with a lot of heart",
+        "intro_heading": "Beautiful Little Finds for Cosy Homes",
+        "intro_text1": "The Cosy Cairn began with a simple belief: that the smallest details can make a house feel like home. What started as a passion for collecting beautiful, comforting objects has grown into a carefully curated shop filled with pieces we truly love.",
+        "intro_text2": "Every item in our collection is chosen with intention. We look for quality craftsmanship, gentle materials, and that little spark of wonder that turns an ordinary moment into something special.",
+        "intro_text3": "From hand-poured candles and woven baskets to vintage-inspired tableware and soft textiles, each piece is something we would happily welcome into our own homes. We hope they bring the same warmth and joy to yours.",
+        "values_title": "What We Stand For",
+        "values_subtitle": "The values that guide everything we do",
+        "val1_title": "Thoughtfully Chosen",
+        "val1_text": "Every product is hand-selected for its beauty, quality, and ability to bring comfort.",
+        "val2_title": "Eco Conscious",
+        "val2_text": "We prioritise sustainable materials and plastic-free packaging wherever possible.",
+        "val3_title": "Small Shop, Big Heart",
+        "val3_text": "When you shop with us, you support a small business and the passionate makers we work with.",
+        "val4_title": "Carefully Packed",
+        "val4_text": "Each order is wrapped with love and sent in eco-friendly packaging to arrive safely."
+      }
+    }
   },
   "order": ["main"]
 }

@@ -1,19 +1,20 @@
 {
   "current": {
-    "color_sage": "#9caf88",
-    "color_sage_dark": "#7a8f6a",
-    "color_sage_light": "#b8c9a9",
-    "color_cream": "#fdfbf7",
-    "color_cream_warm": "#f8f5f0",
-    "color_blush": "#e8d5d0",
-    "color_beige": "#e5ddd3",
-    "color_text_dark": "#3d3d35",
+    "store_name":    "The Cosy Cairn",
+    "store_tagline": "For homes full of light & wonder",
+    "store_desc":    "Beautiful little finds for homes full of light and a little wonder. Thoughtfully chosen, lovingly packed, and sent with care.",
+    "color_sage":        "#9caf88",
+    "color_sage_dark":   "#7a8f6a",
+    "color_sage_light":  "#b8c9a9",
+    "color_cream":       "#fdfbf7",
+    "color_cream_warm":  "#f8f5f0",
+    "color_blush":       "#e8d5d0",
+    "color_beige":       "#e5ddd3",
+    "color_text_dark":   "#3d3d35",
     "color_text_medium": "#5c5c52",
-    "color_text_light": "#8a8a80",
-    "page_width": 1280,
-    "font_heading": "playfair_display_n7",
-    "font_body": "assistant_n4",
-    "font_size_base": 16
+    "color_text_light":  "#8a8a80",
+    "page_width":        1280,
+    "font_size_base":    16
   },
   "presets": {}
 }

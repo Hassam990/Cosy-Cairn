@@ -87,13 +87,17 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   border-radius: 50%;
   object-fit: cover;
   border: 2px solid var(--beige);
+  flex-shrink: 0;
 }
 .logo-placeholder {
   width: 60px; height: 60px;
   border-radius: 50%;
   background: var(--sage-light);
   display: flex; align-items: center; justify-content: center;
-  font-size: 1.2rem; font-weight: 700; color: var(--white);
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.1rem; font-weight: 700; color: var(--white);
+  flex-shrink: 0;
+  border: 2px solid var(--sage-light);
 }
 .logo-text { display: flex; flex-direction: column; }
 .logo-text .brand {
@@ -532,16 +536,27 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 }
 .newsletter p { font-size: 1.1rem; margin-bottom: 36px; opacity: 0.9; max-width: 480px; margin-left: auto; margin-right: auto; line-height: 1.65; }
 .newsletter-form {
-  display: flex; max-width: 520px; margin: 0 auto;
-  background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.3);
-  border-radius: 40px; padding: 6px 6px 6px 24px;
-  backdrop-filter: blur(8px);
+  display: flex;
+  max-width: 520px;
+  margin: 0 auto;
+  background: rgba(255,255,255,0.95);
+  border: 1px solid rgba(255,255,255,0.6);
+  border-radius: 40px;
+  padding: 6px 6px 6px 24px;
 }
+/* Newsletter form input — explicit color to prevent white-on-white */
 .newsletter-form input {
-  flex: 1; padding: 12px 8px; border: none; border-radius: 0;
-  background: transparent; color: var(--white); font-family: inherit; font-size: 1rem; outline: none;
+  flex: 1;
+  padding: 12px 8px;
+  border: none;
+  border-radius: 0;
+  background: transparent;
+  color: #3d3d35 !important;
+  font-family: inherit;
+  font-size: 1rem;
+  outline: none;
 }
-.newsletter-form input::placeholder { color: rgba(255,255,255,0.65); }
+.newsletter-form input::placeholder { color: rgba(61,61,53,0.5); }
 .newsletter-form .btn {
   background: var(--white); color: var(--sage-dark);
   border: none; padding: 12px 28px; font-size: 0.82rem;

@@ -1,6 +1,12 @@
 {
   "sections": {
-    "main": { "type": "shop-main", "disabled": false, "settings": {} }
+    "main": {
+      "type": "shop-main",
+      "settings": {
+        "title": "Shop",
+        "subtitle": "Thoughtfully chosen pieces for your cosy home"
+      }
+    }
   },
   "order": ["main"]
 }

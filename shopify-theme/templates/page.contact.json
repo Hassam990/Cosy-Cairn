@@ -1,6 +1,17 @@
 {
   "sections": {
-    "main": { "type": "contact-main", "disabled": false, "settings": {} }
+    "main": {
+      "type": "contact-main",
+      "settings": {
+        "title": "Get in Touch",
+        "subtitle": "We'd love to hear from you",
+        "info_heading": "Send Us a Message",
+        "info_text": "Whether you have a question about an order, a product, or just want to say hello — we're here to help. Fill in the form and we'll get back to you as soon as we can.",
+        "email": "hello@thecosycairn.co.uk",
+        "location": "United Kingdom",
+        "response_time": "We aim to reply within 1-2 business days"
+      }
+    }
   },
   "order": ["main"]
 }

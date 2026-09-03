@@ -10,9 +10,10 @@
   {
     "name": "Store",
     "settings": [
-      { "type": "text",      "id": "store_name",    "label": "Store name",    "default": "The Cosy Cairn",       "info": "Displayed in footer and browser tab" },
-      { "type": "text",      "id": "store_tagline",  "label": "Store tagline", "default": "For homes full of light & wonder" },
-      { "type": "textarea",  "id": "store_desc",     "label": "Store description", "default": "Beautiful little finds for homes full of light and a little wonder. Thoughtfully chosen, lovingly packed, and sent with care." }
+      { "type": "image_picker", "id": "logo",          "label": "Logo image" },
+      { "type": "text",         "id": "store_name",    "label": "Store name",        "default": "The Cosy Cairn",                    "info": "Displayed in header, footer and browser tab" },
+      { "type": "text",         "id": "store_tagline", "label": "Store tagline",     "default": "For homes full of light & wonder" },
+      { "type": "textarea",     "id": "store_desc",    "label": "Store description", "default": "Beautiful little finds for homes full of light and a little wonder. Thoughtfully chosen, lovingly packed, and sent with care." }
     ]
   },
   {
